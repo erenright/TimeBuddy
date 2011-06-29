@@ -1,0 +1,18 @@
+Changelog for TimeBuddy.
+
+Last updated: June 28, 2011 for v1.0.1
+
+
+v1.0.1 - June 28, 2011
+
+  * Prompt to confirm deleting tasks or clearing counters.
+  * Left-clicking the tray icon now also brings up the context menu.
+  * Double (left) clicking the icon brings up the Settings window.
+  * Default set of tasks: Away from Desk, Lunch/Break.
+  * Tasks are now saved to a version-independant location.
+  * Tasks beginning with a number (e.g., project number) are now grouped,
+    summed, and presented as "[summary]" items at the end of the report list.
+
+v1.0.0 - June 27, 2011
+
+  * Initial release
