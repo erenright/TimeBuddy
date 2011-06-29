@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace TimeBuddy
@@ -27,7 +29,39 @@ namespace TimeBuddy
 
         private void ReportForm_Load(object sender, EventArgs e)
         {
-            grid.DataSource = _timeBuddy.Tasks;
+            // Clone tasks and insert pseudo sum tasks
+            List<Task> tasks = _timeBuddy.Tasks.GetRange(0, _timeBuddy.Tasks.Count);
+
+            Hashtable summary = new Hashtable();
+            foreach (Task task in tasks)
+            {
+                // Does this look like a project?
+                if (Regex.Match(task.Name, @"^\d+\s").Success)
+                {
+                    // Task begins with numbers, extract them
+                    string project = Regex.Replace(task.Name, @"^(\d+)\s.*", "$1");
+                    if (summary.Contains(project))
+                    {
+                        int r = (int)summary[project];
+                        r += task.RawSeconds;
+                        summary[project] = r;
+                    }
+                    else
+                    {
+                        summary.Add(project, task.RawSeconds);
+                    }
+                }
+            }
+
+            foreach (string project in summary.Keys)
+            {
+                Task task = new Task("[summary] " + project);
+                task.RawSeconds = (int)summary[project];
+                tasks.Add(task);
+            }
+
+            // We have all tasks, so go forward with the grid
+            grid.DataSource = tasks;
             grid.Columns.Clear();
 
             DataGridViewTextBoxColumn c = new DataGridViewTextBoxColumn();
