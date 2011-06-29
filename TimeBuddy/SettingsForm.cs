@@ -42,12 +42,27 @@ namespace TimeBuddy
 
         private void btnRemoveTask_Click(object sender, EventArgs e)
         {
-            foreach (Task task in lstTasks.SelectedItems)
-            {
-                _timeBuddy.Tasks.Remove(task);
-            }
+            DialogResult res;
+            string msg = "Are you sure you want to delete the selected ";
 
-            ReloadTasks();
+            if (lstTasks.SelectedItems.Count <= 0)
+                return;
+            else if (lstTasks.SelectedItems.Count == 1)
+                msg += "item?\r\n\r\nNote: You can select more than one.";
+            else
+                msg += "items?";
+
+            res = MessageBox.Show(msg, "Confirm delete", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+
+            if (res == DialogResult.Yes)
+            {
+                foreach (Task task in lstTasks.SelectedItems)
+                {
+                    _timeBuddy.Tasks.Remove(task);
+                }
+
+                ReloadTasks();
+            }
         }
 
         private void ReloadTasks()
@@ -78,12 +93,19 @@ namespace TimeBuddy
 
         private void btnClearCounters_Click(object sender, EventArgs e)
         {
-            foreach (Task task in _timeBuddy.Tasks)
-            {
-                task.Clear();
-            }
+            DialogResult res;
+            string msg = "Are you sure you want to clear counters for all items?";
+            res = MessageBox.Show(msg, "Confirm clear", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
 
-            ReloadTasks();
+            if (res == DialogResult.Yes)
+            {
+                foreach (Task task in _timeBuddy.Tasks)
+                {
+                    task.Clear();
+                }
+
+                ReloadTasks();
+            }
         }
 
         private void btnAbout_Click(object sender, EventArgs e)
