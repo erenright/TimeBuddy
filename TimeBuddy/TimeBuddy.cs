@@ -40,6 +40,8 @@ namespace TimeBuddy
             trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 
             trayIcon.ContextMenu = trayMenu;
+            trayIcon.MouseDoubleClick += new MouseEventHandler(trayIcon_MouseDoubleClick);
+            trayIcon.MouseClick += new MouseEventHandler(trayIcon_MouseClick);
             trayIcon.Visible = true;
 
             timer = new System.Timers.Timer();
@@ -56,6 +58,18 @@ namespace TimeBuddy
                 MessageBox.Show("Failed to load saved tasks. Starting fresh.", "TimeBuddy", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 _tasks = new List<Task>();
             }
+        }
+
+        void trayIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            System.Reflection.MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            mi.Invoke(trayIcon, null);
+        }
+
+        void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Form f = new SettingsForm(this);
+            f.Show();
         }
 
         public void RebuildMenu()
