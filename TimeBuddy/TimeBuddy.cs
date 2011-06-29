@@ -57,6 +57,11 @@ namespace TimeBuddy
             {
                 MessageBox.Show("Failed to load saved tasks. Starting fresh.", "TimeBuddy", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 _tasks = new List<Task>();
+
+                Task t = new Task("Away from Desk");
+                _tasks.Add(t);
+                t = new Task("Lunch/Break");
+                _tasks.Add(t);
             }
         }
 
@@ -196,7 +201,7 @@ namespace TimeBuddy
         private void SerializeToXML(List<Task> tasks)
         {
             XmlSerializer s = new XmlSerializer(typeof(List<Task>));
-            TextWriter w = new StreamWriter(Application.UserAppDataPath + @"\tasks.xml");
+            TextWriter w = new StreamWriter(Application.UserAppDataPath + @"\\..\\tasks.xml");
             s.Serialize(w, tasks);
             w.Close();
         }
@@ -204,7 +209,7 @@ namespace TimeBuddy
         private List<Task> DeserializeFromXml()
         {
             XmlSerializer s = new XmlSerializer(typeof(List<Task>));
-            TextReader r = new StreamReader(Application.UserAppDataPath + @"\tasks.xml");
+            TextReader r = new StreamReader(Application.UserAppDataPath + @"\\..\\tasks.xml");
             List<Task> tasks;
             tasks = (List<Task>)s.Deserialize(r);
             r.Close();
