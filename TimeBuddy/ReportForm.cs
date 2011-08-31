@@ -67,19 +67,16 @@ namespace TimeBuddy
             DataGridViewTextBoxColumn c = new DataGridViewTextBoxColumn();
             c.DataPropertyName = "Name";
             c.HeaderText = "Task";
-            c.Width = (grid.Width / 2) + 100;
             grid.Columns.Add(c);
 
             c = new DataGridViewTextBoxColumn();
             c.DataPropertyName = "HHMM";
             c.HeaderText = "HH:MM";
-            c.Width = 50;
             grid.Columns.Add(c);
 
             c = new DataGridViewTextBoxColumn();
             c.DataPropertyName = "HoursFractional";
             c.HeaderText = "Hours";
-            c.Width = 50;
             grid.Columns.Add(c);
         }
     }
