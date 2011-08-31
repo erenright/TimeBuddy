@@ -29,8 +29,17 @@ namespace TimeBuddy
 
         private void ReportForm_Load(object sender, EventArgs e)
         {
-            // Clone tasks and insert pseudo sum tasks
-            List<Task> tasks = _timeBuddy.Tasks.GetRange(0, _timeBuddy.Tasks.Count);
+            // Clone tasks
+            List<Task> sourceTasks = _timeBuddy.Tasks.GetRange(0, _timeBuddy.Tasks.Count);
+            List<Task> tasks = new List<Task>();
+
+            // Construct initial task list
+            foreach (Task task in sourceTasks)
+            {
+                // If the item has time against it, count it
+                if (task.RawSeconds > 0)
+                    tasks.Add(task);
+            }
 
             Hashtable summary = new Hashtable();
             foreach (Task task in tasks)
