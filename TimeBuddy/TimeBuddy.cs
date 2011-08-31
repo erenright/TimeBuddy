@@ -17,6 +17,7 @@ namespace TimeBuddy
         private System.Timers.Timer timer;
         private int saveCounter = 0;
         private Boolean paused = false;
+        private DateTime lastTick;
 
         private List<Task> _tasks = new List<Task>();
 
@@ -48,6 +49,7 @@ namespace TimeBuddy
             timer = new System.Timers.Timer();
             timer.Elapsed += new ElapsedEventHandler(OnTimerTick);
             timer.Interval = 1000; // 1 second
+            lastTick = System.DateTime.Now;
             timer.Enabled = true;
 
             try
@@ -101,6 +103,18 @@ namespace TimeBuddy
             trayMenu.MenuItems.Add("Quit", OnExit);
         }
 
+        /***************************************************************
+         * OnTimerTick()
+         * 
+         *   Timer tick handler.  Performs the following tasks:
+         *   
+         *     1. Updates the icon tooltip with the current task.
+         *     2. Ticks each task.
+         *     3. Saves the counters to disk once per minute.
+         *     4. Checks if we have transitioned from 4:59pm to
+         *        5pm, and if so, pause the counter and prompt the
+         *        user to continue.
+         */
         private void OnTimerTick(object source, ElapsedEventArgs e)
         {
             foreach (Task task in _tasks)
@@ -124,7 +138,32 @@ namespace TimeBuddy
                 {
                     MessageBox.Show("Failed to save tasks.", "TimeBuddy", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
 
+            // Have we transitioned from 4pm to 5pm?
+            DateTime now = System.DateTime.Now;
+            if (lastTick.Hour == 16 && now.Hour == 17)
+            {
+                // Yes
+                lastTick = now;
+
+                timer.Stop();
+                paused = true;
+
+                DialogResult res = MessageBox.Show("Looks like your work day is done. The timer has been paused.\n\nStart it back up?",
+                    "TimeBuddy", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+
+                if (res == DialogResult.Yes)
+                {
+                    paused = false;
+                    timer.Start();
+                }
+
+                RebuildMenu();
+            }
+            else
+            {
+                lastTick = now;
             }
         }
 
