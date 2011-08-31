@@ -110,7 +110,8 @@ namespace TimeBuddy
 
         private void btnAbout_Click(object sender, EventArgs e)
         {
-            string msg = String.Format("TimeBuddy version {0}", GetType().Assembly.GetName().Version.ToString());
+            string msg = String.Format("TimeBuddy version {0}\n\nCopyright © 2011 5amsoftware",
+                GetType().Assembly.GetName().Version.ToString());
             MessageBox.Show(msg, "About");
         }
 
