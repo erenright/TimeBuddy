@@ -1,9 +1,9 @@
 Changelog for TimeBuddy.
 
-Last updated: August 30, 2011 for v1.1.0
+Last updated: August 30, 2011 for v1.2.0
 
 
-v1.1.0 - August 30, 2011
+v1.2.0 - August 30, 2011
 
   * Ability to rename tasks by double-clicking on them in the Settings window.
   * Option to pause the counter via the system tray icon context menu.
@@ -13,7 +13,7 @@ v1.1.0 - August 30, 2011
     message box displayed noting this and prompting to start it up again or
     not.
 
-v1.0.1 - June 28, 2011
+v1.1.0 - June 28, 2011
 
   * Prompt to confirm deleting tasks or clearing counters.
   * Left-clicking the tray icon now also brings up the context menu.
