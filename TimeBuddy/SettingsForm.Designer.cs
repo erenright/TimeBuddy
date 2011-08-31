@@ -127,6 +127,7 @@
             this.lstTasks.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lstTasks.Size = new System.Drawing.Size(323, 95);
             this.lstTasks.TabIndex = 0;
+            this.lstTasks.DoubleClick += new System.EventHandler(this.lstTasks_DoubleClick);
             // 
             // btnClearCounters
             // 

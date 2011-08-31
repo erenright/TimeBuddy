@@ -120,5 +120,25 @@ namespace TimeBuddy
                 btnAddTask_Click(sender, e);
         }
 
+        /***************************************************************
+         * lstTasks_DoubleClick()
+         * 
+         *   |DoubleClick| handler for |lstTasks|.  Opens a dialog that
+         *   allows the user to rename the current task.
+         */
+        private void lstTasks_DoubleClick(object sender, EventArgs e)
+        {
+            Task task = (Task)lstTasks.SelectedItem;
+            if (task == null)
+                return;
+
+            // Prompt the user to rename the task
+            RenameTaskDialog dlg = new RenameTaskDialog(task);
+            dlg.ShowDialog();
+
+            // Reload tasks in case the name changed.
+            ReloadTasks();
+        }
+
     }
 }

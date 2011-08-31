@@ -1,7 +1,11 @@
 Changelog for TimeBuddy.
 
-Last updated: June 28, 2011 for v1.0.1
+Last updated: August 30, 2011 for v1.1.0
 
+
+v1.1.0 - August 30, 2011
+
+  * Ability to rename tasks by double-clicking on them in the Settings window.
 
 v1.0.1 - June 28, 2011
 
