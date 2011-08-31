@@ -16,6 +16,7 @@ namespace TimeBuddy
         private ContextMenu trayMenu;
         private System.Timers.Timer timer;
         private int saveCounter = 0;
+        private Boolean paused = false;
 
         private List<Task> _tasks = new List<Task>();
 
@@ -90,6 +91,11 @@ namespace TimeBuddy
             }
 
             trayMenu.MenuItems.Add("-");
+
+            MenuItem p = new MenuItem("Pause", MenuPause);
+            p.Checked = paused;
+
+            trayMenu.MenuItems.Add(p);
             trayMenu.MenuItems.Add("Report...", MenuReport);
             trayMenu.MenuItems.Add("Settings...", MenuSettings);
             trayMenu.MenuItems.Add("Quit", OnExit);
@@ -148,6 +154,22 @@ namespace TimeBuddy
             ShowInTaskbar = false;
 
             base.OnLoad(e);
+        }
+
+        private void MenuPause(object sender, EventArgs e)
+        {
+            if (paused)
+            {
+                paused = false;
+                timer.Start();
+            }
+            else
+            {
+                paused = true;
+                timer.Stop();
+            }
+
+            RebuildMenu();
         }
 
         private void MenuSettings(object sender, EventArgs e)
