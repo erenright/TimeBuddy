@@ -7,7 +7,7 @@ v1.1.0 - August 30, 2011
 
   * Ability to rename tasks by double-clicking on them in the Settings window.
   * Option to pause the counter via the system tray icon context menu.
-  * Report window scales with the window better.
+  * Report grid scales with the window better.
 
 v1.0.1 - June 28, 2011
 
