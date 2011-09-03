@@ -1,10 +1,17 @@
 Changelog for TimeBuddy.
 
-Last updated: August 30, 2011 for v1.2.0
+Last updated: September 2, 2011 for v1.2.1
+
+
 
 
 v1.2.1 - September 2, 2011
 
+  * Prevent the action of pausing the timer during 4pm and unpausing
+    unpausing during 5pm from causing the end-of-day dialog to be
+    displayed.
+  * Change the system tray icon tooltip to "Paused" when the timer is
+    paused.
   * Made the Settings window larger (vertically) to allow viewing more
     tasks at once.
   * Added "Report" button to settings window that opens the report (same

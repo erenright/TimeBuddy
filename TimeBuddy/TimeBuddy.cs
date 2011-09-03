@@ -16,8 +16,38 @@ namespace TimeBuddy
         private ContextMenu trayMenu;
         private System.Timers.Timer timer;
         private int saveCounter = 0;
-        private Boolean paused = false;
+        private Boolean _paused = false;
         private DateTime lastTick;
+
+        private Boolean Paused
+        {
+            get
+            {
+                return _paused;
+            }
+
+            set
+            {
+                _paused = value;
+
+                if (_paused)
+                {
+                    timer.Stop();
+                    trayIcon.Text = "Paused";
+                }
+                else
+                {
+                    // Before starting the timer up again, we must reset
+                    // |lastTick| to the current time in order to prevent
+                    // the end-of-day prompt from potentially displaying
+                    // (if timer is paused during 4pm and unpaused during
+                    // 5pm)
+                    lastTick = System.DateTime.Now;
+
+                    timer.Start();
+                }
+            }
+        }
 
         private List<Task> _tasks = new List<Task>();
 
@@ -95,7 +125,7 @@ namespace TimeBuddy
             trayMenu.MenuItems.Add("-");
 
             MenuItem p = new MenuItem("Pause", MenuPause);
-            p.Checked = paused;
+            p.Checked = Paused;
 
             trayMenu.MenuItems.Add(p);
             trayMenu.MenuItems.Add("Report...", MenuReport);
@@ -147,17 +177,13 @@ namespace TimeBuddy
                 // Yes
                 lastTick = now;
 
-                timer.Stop();
-                paused = true;
+                Paused = true;
 
                 DialogResult res = MessageBox.Show("Looks like your work day is done. The timer has been paused.\n\nStart it back up?",
                     "TimeBuddy", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
 
                 if (res == DialogResult.Yes)
-                {
-                    paused = false;
-                    timer.Start();
-                }
+                    Paused = false;
 
                 RebuildMenu();
             }
@@ -197,16 +223,10 @@ namespace TimeBuddy
 
         private void MenuPause(object sender, EventArgs e)
         {
-            if (paused)
-            {
-                paused = false;
-                timer.Start();
-            }
+            if (Paused)
+                Paused = false;
             else
-            {
-                paused = true;
-                timer.Stop();
-            }
+                Paused = true;
 
             RebuildMenu();
         }
