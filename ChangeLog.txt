@@ -3,6 +3,14 @@ Changelog for TimeBuddy.
 Last updated: August 30, 2011 for v1.2.0
 
 
+v1.2.1 - September 2, 2011
+
+  * Made the Settings window larger (vertically) to allow viewing more
+    tasks at once.
+  * Added "Report" button to settings window that opens the report (same
+    function as the "Report" context menu item of the system tray icon).
+
+
 v1.2.0 - August 30, 2011
 
   * Ability to rename tasks by double-clicking on them in the Settings window.

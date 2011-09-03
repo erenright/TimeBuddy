@@ -141,5 +141,17 @@ namespace TimeBuddy
             ReloadTasks();
         }
 
+        /***************************************************************
+         * btnSettings_Click()
+         * 
+         *   |Click| event handler for |btnReport|.  Generates a new
+         *   report dialog.
+         */
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            ReportForm frm = new ReportForm(_timeBuddy);
+            frm.Show();
+        }
+
     }
 }
