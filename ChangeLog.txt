@@ -5,6 +5,12 @@ Last updated: September 2, 2011 for v1.2.1
 
 
 
+v1.3.0 - Unreleased
+
+  * Change the icon to be red when paused, for greater visual
+    notification.
+
+
 v1.2.1 - September 2, 2011
 
   * Prevent the action of pausing the timer during 4pm and unpausing

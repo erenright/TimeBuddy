@@ -19,6 +19,10 @@ namespace TimeBuddy
         private Boolean _paused = false;
         private DateTime lastTick;
 
+        // Icons used by the system tray icon
+        private Icon normalIcon;
+        private Icon pausedIcon;
+
         private Boolean Paused
         {
             get
@@ -34,6 +38,7 @@ namespace TimeBuddy
                 {
                     timer.Stop();
                     trayIcon.Text = "Paused";
+                    trayIcon.Icon = pausedIcon;
                 }
                 else
                 {
@@ -44,6 +49,7 @@ namespace TimeBuddy
                     // 5pm)
                     lastTick = System.DateTime.Now;
 
+                    trayIcon.Icon = normalIcon;
                     timer.Start();
                 }
             }
@@ -61,7 +67,10 @@ namespace TimeBuddy
 
         public TimeBuddy()
         {
+            // The normal icon comes from the SettingsForm, which the paused icon is a custom resource
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
+            normalIcon = (Icon)resources.GetObject("$this.Icon");
+            pausedIcon = Properties.Resources.PausedIcon;
 
             trayMenu = new ContextMenu();
             trayMenu.Popup += new EventHandler(trayMenu_Popup);
@@ -69,7 +78,7 @@ namespace TimeBuddy
             trayIcon = new NotifyIcon();
             trayIcon.Text = "TimeBuddy";
             //trayIcon.Icon = new Icon(SystemIcons.Application, 40, 40);
-            trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            trayIcon.Icon = normalIcon; // normalIcon;
 
             trayIcon.ContextMenu = trayMenu;
             trayIcon.MouseDoubleClick += new MouseEventHandler(trayIcon_MouseDoubleClick);
