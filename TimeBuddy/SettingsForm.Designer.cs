@@ -42,10 +42,11 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageTasks = new System.Windows.Forms.TabPage();
             this.tabPageOptions = new System.Windows.Forms.TabPage();
-            this.lblDayStart = new System.Windows.Forms.Label();
-            this.dtpDayStart = new System.Windows.Forms.DateTimePicker();
-            this.lblDayEnd = new System.Windows.Forms.Label();
             this.dtpDayEnd = new System.Windows.Forms.DateTimePicker();
+            this.lblDayEnd = new System.Windows.Forms.Label();
+            this.dtpDayStart = new System.Windows.Forms.DateTimePicker();
+            this.lblDayStart = new System.Windows.Forms.Label();
+            this.btnHelp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numAdjust)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPageTasks.SuspendLayout();
@@ -126,7 +127,7 @@
             // 
             this.btnClearCounters.Location = new System.Drawing.Point(355, 31);
             this.btnClearCounters.Name = "btnClearCounters";
-            this.btnClearCounters.Size = new System.Drawing.Size(91, 23);
+            this.btnClearCounters.Size = new System.Drawing.Size(89, 23);
             this.btnClearCounters.TabIndex = 1;
             this.btnClearCounters.Text = "Clear Counters";
             this.btnClearCounters.UseVisualStyleBackColor = true;
@@ -136,7 +137,7 @@
             // 
             this.btnAbout.Location = new System.Drawing.Point(355, 60);
             this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Size = new System.Drawing.Size(91, 23);
+            this.btnAbout.Size = new System.Drawing.Size(89, 23);
             this.btnAbout.TabIndex = 5;
             this.btnAbout.Text = "About...";
             this.btnAbout.UseVisualStyleBackColor = true;
@@ -144,7 +145,7 @@
             // 
             // btnReport
             // 
-            this.btnReport.Location = new System.Drawing.Point(355, 89);
+            this.btnReport.Location = new System.Drawing.Point(355, 118);
             this.btnReport.Name = "btnReport";
             this.btnReport.Size = new System.Drawing.Size(89, 23);
             this.btnReport.TabIndex = 6;
@@ -193,14 +194,25 @@
             this.tabPageOptions.Text = "Options";
             this.tabPageOptions.UseVisualStyleBackColor = true;
             // 
-            // lblDayStart
+            // dtpDayEnd
             // 
-            this.lblDayStart.AutoSize = true;
-            this.lblDayStart.Location = new System.Drawing.Point(7, 12);
-            this.lblDayStart.Name = "lblDayStart";
-            this.lblDayStart.Size = new System.Drawing.Size(64, 13);
-            this.lblDayStart.TabIndex = 0;
-            this.lblDayStart.Text = "Start of day:";
+            this.dtpDayEnd.CustomFormat = "hh:mm tt";
+            this.dtpDayEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDayEnd.Location = new System.Drawing.Point(77, 34);
+            this.dtpDayEnd.Name = "dtpDayEnd";
+            this.dtpDayEnd.ShowUpDown = true;
+            this.dtpDayEnd.Size = new System.Drawing.Size(75, 20);
+            this.dtpDayEnd.TabIndex = 3;
+            this.dtpDayEnd.Value = new System.DateTime(2011, 9, 22, 17, 0, 0, 0);
+            // 
+            // lblDayEnd
+            // 
+            this.lblDayEnd.AutoSize = true;
+            this.lblDayEnd.Location = new System.Drawing.Point(7, 38);
+            this.lblDayEnd.Name = "lblDayEnd";
+            this.lblDayEnd.Size = new System.Drawing.Size(61, 13);
+            this.lblDayEnd.TabIndex = 2;
+            this.lblDayEnd.Text = "End of day:";
             // 
             // dtpDayStart
             // 
@@ -213,31 +225,31 @@
             this.dtpDayStart.TabIndex = 1;
             this.dtpDayStart.Value = new System.DateTime(2011, 9, 22, 8, 30, 0, 0);
             // 
-            // lblDayEnd
+            // lblDayStart
             // 
-            this.lblDayEnd.AutoSize = true;
-            this.lblDayEnd.Location = new System.Drawing.Point(7, 38);
-            this.lblDayEnd.Name = "lblDayEnd";
-            this.lblDayEnd.Size = new System.Drawing.Size(61, 13);
-            this.lblDayEnd.TabIndex = 2;
-            this.lblDayEnd.Text = "End of day:";
+            this.lblDayStart.AutoSize = true;
+            this.lblDayStart.Location = new System.Drawing.Point(7, 12);
+            this.lblDayStart.Name = "lblDayStart";
+            this.lblDayStart.Size = new System.Drawing.Size(64, 13);
+            this.lblDayStart.TabIndex = 0;
+            this.lblDayStart.Text = "Start of day:";
             // 
-            // dtpDayEnd
+            // btnHelp
             // 
-            this.dtpDayEnd.CustomFormat = "hh:mm tt";
-            this.dtpDayEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpDayEnd.Location = new System.Drawing.Point(77, 34);
-            this.dtpDayEnd.Name = "dtpDayEnd";
-            this.dtpDayEnd.ShowUpDown = true;
-            this.dtpDayEnd.Size = new System.Drawing.Size(75, 20);
-            this.dtpDayEnd.TabIndex = 3;
-            this.dtpDayEnd.Value = new System.DateTime(2011, 9, 22, 17, 0, 0, 0);
+            this.btnHelp.Location = new System.Drawing.Point(355, 89);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(89, 23);
+            this.btnHelp.TabIndex = 8;
+            this.btnHelp.Text = "Help";
+            this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(460, 310);
+            this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnReport);
             this.Controls.Add(this.btnAbout);
@@ -279,6 +291,7 @@
         private System.Windows.Forms.Label lblDayEnd;
         private System.Windows.Forms.DateTimePicker dtpDayStart;
         private System.Windows.Forms.Label lblDayStart;
+        private System.Windows.Forms.Button btnHelp;
     }
 }
 

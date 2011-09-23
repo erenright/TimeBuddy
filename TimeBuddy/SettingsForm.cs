@@ -178,5 +178,23 @@ namespace TimeBuddy
             _timeBuddy.Settings.EndMinute = dtpDayEnd.Value.Minute;
         }
 
+        /***************************************************************
+         * btnHelp_Click()
+         * 
+         *   |Click| event handler for |btnHelp|.  Opens up
+         *   "TimeBuddy Help.chm"
+         */
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("TimeBuddy Help.chm");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Unable to open help file.");
+            }
+        }
+
     }
 }

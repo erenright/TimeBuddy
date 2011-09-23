@@ -19,9 +19,11 @@ AppUpdatesURL=http://www.5amsoftware.com/
 [Files]
 Source: .\TimeBuddy\bin\Release\TimeBuddy.exe; DestDir: {app}; 
 Source: .\ChangeLog.txt; DestDir: {app}; 
+Source: .\Help\TimeBuddy Help.chm; DestDir: {app}; 
 
 [Icons]
 Name: {group}\TimeBuddy; Filename: {app}\TimeBuddy.exe; WorkingDir: {app}; 
+Name: "{group}\TimeBuddy Help"; Filename: {app}\TimeBuddy Help.chm; WorkingDir: {app}; 
 Name: "{group}\Change Log"; Filename: {app}\ChangeLog.txt; WorkingDir: {app}; 
 Name: "{group}\Uninstall TimeBuddy"; Filename: {uninstallexe}; 
 
