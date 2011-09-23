@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using System.Drawing;
 using System.Timers;
+using System.Windows.Forms;
 using System.Xml.Serialization;
-using System.IO;
+
 
 namespace TimeBuddy
 {
@@ -22,6 +23,13 @@ namespace TimeBuddy
         // Icons used by the system tray icon
         private Icon normalIcon;
         private Icon pausedIcon;
+
+        private Settings _settings = new Settings();
+
+        public Settings Settings
+        {
+            get { return _settings; }
+        }
 
         private Boolean Paused
         {
@@ -55,16 +63,6 @@ namespace TimeBuddy
             }
         }
 
-        private List<Task> _tasks = new List<Task>();
-
-        public List<Task> Tasks
-        {
-            get
-            {
-                return _tasks;
-            }
-        }
-
         public TimeBuddy()
         {
             // The normal icon comes from the SettingsForm, which the paused icon is a custom resource
@@ -83,28 +81,37 @@ namespace TimeBuddy
             trayIcon.ContextMenu = trayMenu;
             trayIcon.MouseDoubleClick += new MouseEventHandler(trayIcon_MouseDoubleClick);
             trayIcon.MouseClick += new MouseEventHandler(trayIcon_MouseClick);
-            trayIcon.Visible = true;
 
             timer = new System.Timers.Timer();
             timer.Elapsed += new ElapsedEventHandler(OnTimerTick);
             timer.Interval = 1000; // 1 second
             lastTick = System.DateTime.Now;
-            timer.Enabled = true;
 
             try
             {
-                _tasks = DeserializeFromXml();
+                DeserializeFromXML();
             }
             catch (Exception)
             {
                 MessageBox.Show("Failed to load saved tasks. Starting fresh.", "TimeBuddy", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                _tasks = new List<Task>();
 
+                // Default tasks
+                Settings.Tasks = new List<Task>();
                 Task t = new Task("Away from Desk");
-                _tasks.Add(t);
+                Settings.Tasks.Add(t);
                 t = new Task("Lunch/Break");
-                _tasks.Add(t);
+                Settings.Tasks.Add(t);
+
+                // Default times
+                Settings.StartHour = 8;
+                Settings.StartMinute = 30;
+                Settings.EndHour = 17;
+                Settings.EndMinute = 0;
             }
+
+            // Enable the timer only after everything has been loaded
+            trayIcon.Visible = true;
+            timer.Enabled = true;
         }
 
         void trayIcon_MouseClick(object sender, MouseEventArgs e)
@@ -123,7 +130,7 @@ namespace TimeBuddy
         {
             trayMenu.MenuItems.Clear();
 
-            foreach (Task task in _tasks)
+            foreach (Task task in _settings.Tasks)
             {
                 MenuItem item = new MenuItem(task.Name, task_Click);
                 if (task.Active)
@@ -156,7 +163,7 @@ namespace TimeBuddy
          */
         private void OnTimerTick(object source, ElapsedEventArgs e)
         {
-            foreach (Task task in _tasks)
+            foreach (Task task in _settings.Tasks)
             {
                 task.Tick();
 
@@ -171,7 +178,7 @@ namespace TimeBuddy
 
                 try
                 {
-                    SerializeToXML(_tasks);
+                    SerializeToXML();
                 }
                 catch (Exception)
                 {
@@ -179,9 +186,36 @@ namespace TimeBuddy
                 }
             }
 
-            // Have we transitioned from 4pm to 5pm?
+            //
+            // After-hours transition testing
+            //
+
             DateTime now = System.DateTime.Now;
-            if (lastTick.Hour == 16 && now.Hour == 17)
+
+            // Scale back one hour/minute
+            int endHourPrev = Settings.EndHour;
+            int endMinutePrev = Settings.EndMinute;
+
+            // If we are aligned on an hour
+            if (endMinutePrev == 0)
+            {
+                // Scale back the hour and use 59 minutes
+                if (endHourPrev == 0)
+                    endHourPrev = 23;
+                else
+                    --endHourPrev;
+
+                endMinutePrev = 59;
+            }
+            else
+            {
+                // Otherwise, scale back the minute
+                --endMinutePrev;
+            }
+
+            // Have we transitioned to after-hours?
+            if ((lastTick.Hour == endHourPrev && now.Hour == Settings.EndHour)
+                && (lastTick.Minute == endMinutePrev && now.Minute == Settings.EndMinute))
             {
                 // Yes
                 lastTick = now;
@@ -206,7 +240,7 @@ namespace TimeBuddy
         {
             MenuItem item = (MenuItem)sender;
 
-            foreach (Task task in _tasks)
+            foreach (Task task in _settings.Tasks)
             {
                 task.Active = false;
 
@@ -256,7 +290,7 @@ namespace TimeBuddy
         {
             try
             {
-                SerializeToXML(_tasks);
+                SerializeToXML();
             }
             catch (Exception)
             {
@@ -288,27 +322,51 @@ namespace TimeBuddy
 
         }
 
-        private void SerializeToXML(List<Task> tasks)
+        public void SerializeToXML()
         {
-            XmlSerializer s = new XmlSerializer(typeof(List<Task>));
-            TextWriter w = new StreamWriter(Application.UserAppDataPath + @"\\..\\tasks.xml");
-            s.Serialize(w, tasks);
-            w.Close();
+            TextWriter w = null;
+
+            try
+            {
+                XmlSerializer s = new XmlSerializer(typeof(Settings));
+                w = new StreamWriter(Application.UserAppDataPath + @"\\..\\tasks.xml");
+                s.Serialize(w, Settings);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                if (w != null)
+                    w.Close();
+            }
         }
 
-        private List<Task> DeserializeFromXml()
+        public void DeserializeFromXML()
         {
-            XmlSerializer s = new XmlSerializer(typeof(List<Task>));
-            TextReader r = new StreamReader(Application.UserAppDataPath + @"\\..\\tasks.xml");
-            List<Task> tasks;
-            tasks = (List<Task>)s.Deserialize(r);
-            r.Close();
+            TextReader r = null;
 
-            // Ensure no tasks are active
-            foreach (Task t in tasks)
-                t.Active = false;
+            try
+            {
+                XmlSerializer s = new XmlSerializer(typeof(Settings));
+                r = new StreamReader(Application.UserAppDataPath + @"\\..\\tasks.xml");
+                _settings = (Settings)s.Deserialize(r);
+                r.Close();
 
-            return tasks;
+                // Ensure no tasks are active
+                foreach (Task t in Settings.Tasks)
+                    t.Active = false;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                if (r != null)
+                    r.Close();
+            }
         }
     }
 }

@@ -30,7 +30,7 @@ namespace TimeBuddy
         private void ReportForm_Load(object sender, EventArgs e)
         {
             // Clone tasks
-            List<Task> sourceTasks = _timeBuddy.Tasks.GetRange(0, _timeBuddy.Tasks.Count);
+            List<Task> sourceTasks = _timeBuddy.Settings.Tasks.GetRange(0, _timeBuddy.Settings.Tasks.Count);
             List<Task> tasks = new List<Task>();
 
             // Construct initial task list

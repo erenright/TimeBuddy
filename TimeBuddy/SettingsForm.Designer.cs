@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
-            this.grpTasks = new System.Windows.Forms.GroupBox();
             this.numAdjust = new System.Windows.Forms.NumericUpDown();
             this.txtNewTask = new System.Windows.Forms.TextBox();
             this.btnRemoveTime = new System.Windows.Forms.Button();
@@ -40,29 +39,22 @@
             this.btnClearCounters = new System.Windows.Forms.Button();
             this.btnAbout = new System.Windows.Forms.Button();
             this.btnReport = new System.Windows.Forms.Button();
-            this.grpTasks.SuspendLayout();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPageTasks = new System.Windows.Forms.TabPage();
+            this.tabPageOptions = new System.Windows.Forms.TabPage();
+            this.lblDayStart = new System.Windows.Forms.Label();
+            this.dtpDayStart = new System.Windows.Forms.DateTimePicker();
+            this.lblDayEnd = new System.Windows.Forms.Label();
+            this.dtpDayEnd = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.numAdjust)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPageTasks.SuspendLayout();
+            this.tabPageOptions.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // grpTasks
-            // 
-            this.grpTasks.Controls.Add(this.numAdjust);
-            this.grpTasks.Controls.Add(this.txtNewTask);
-            this.grpTasks.Controls.Add(this.btnRemoveTime);
-            this.grpTasks.Controls.Add(this.btnAddTime);
-            this.grpTasks.Controls.Add(this.btnRemoveTask);
-            this.grpTasks.Controls.Add(this.btnAddTask);
-            this.grpTasks.Controls.Add(this.lstTasks);
-            this.grpTasks.Location = new System.Drawing.Point(12, 12);
-            this.grpTasks.Name = "grpTasks";
-            this.grpTasks.Size = new System.Drawing.Size(337, 282);
-            this.grpTasks.TabIndex = 0;
-            this.grpTasks.TabStop = false;
-            this.grpTasks.Text = "Tasks";
             // 
             // numAdjust
             // 
-            this.numAdjust.Location = new System.Drawing.Point(168, 226);
+            this.numAdjust.Location = new System.Drawing.Point(162, 207);
             this.numAdjust.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -74,7 +66,7 @@
             // 
             // txtNewTask
             // 
-            this.txtNewTask.Location = new System.Drawing.Point(87, 256);
+            this.txtNewTask.Location = new System.Drawing.Point(81, 237);
             this.txtNewTask.Name = "txtNewTask";
             this.txtNewTask.Size = new System.Drawing.Size(242, 20);
             this.txtNewTask.TabIndex = 5;
@@ -82,7 +74,7 @@
             // 
             // btnRemoveTime
             // 
-            this.btnRemoveTime.Location = new System.Drawing.Point(245, 225);
+            this.btnRemoveTime.Location = new System.Drawing.Point(239, 206);
             this.btnRemoveTime.Name = "btnRemoveTime";
             this.btnRemoveTime.Size = new System.Drawing.Size(84, 23);
             this.btnRemoveTime.TabIndex = 4;
@@ -92,7 +84,7 @@
             // 
             // btnAddTime
             // 
-            this.btnAddTime.Location = new System.Drawing.Point(87, 224);
+            this.btnAddTime.Location = new System.Drawing.Point(81, 205);
             this.btnAddTime.Name = "btnAddTime";
             this.btnAddTime.Size = new System.Drawing.Size(75, 23);
             this.btnAddTime.TabIndex = 3;
@@ -102,7 +94,7 @@
             // 
             // btnRemoveTask
             // 
-            this.btnRemoveTask.Location = new System.Drawing.Point(6, 224);
+            this.btnRemoveTask.Location = new System.Drawing.Point(0, 205);
             this.btnRemoveTask.Name = "btnRemoveTask";
             this.btnRemoveTask.Size = new System.Drawing.Size(75, 23);
             this.btnRemoveTask.TabIndex = 2;
@@ -112,7 +104,7 @@
             // 
             // btnAddTask
             // 
-            this.btnAddTask.Location = new System.Drawing.Point(6, 253);
+            this.btnAddTask.Location = new System.Drawing.Point(0, 234);
             this.btnAddTask.Name = "btnAddTask";
             this.btnAddTask.Size = new System.Drawing.Size(75, 23);
             this.btnAddTask.TabIndex = 1;
@@ -123,7 +115,7 @@
             // lstTasks
             // 
             this.lstTasks.FormattingEnabled = true;
-            this.lstTasks.Location = new System.Drawing.Point(6, 19);
+            this.lstTasks.Location = new System.Drawing.Point(0, 0);
             this.lstTasks.Name = "lstTasks";
             this.lstTasks.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lstTasks.Size = new System.Drawing.Size(323, 199);
@@ -160,32 +152,116 @@
             this.btnReport.UseVisualStyleBackColor = true;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPageTasks);
+            this.tabControl1.Controls.Add(this.tabPageOptions);
+            this.tabControl1.Location = new System.Drawing.Point(12, 13);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(334, 286);
+            this.tabControl1.TabIndex = 7;
+            // 
+            // tabPageTasks
+            // 
+            this.tabPageTasks.Controls.Add(this.numAdjust);
+            this.tabPageTasks.Controls.Add(this.lstTasks);
+            this.tabPageTasks.Controls.Add(this.txtNewTask);
+            this.tabPageTasks.Controls.Add(this.btnAddTask);
+            this.tabPageTasks.Controls.Add(this.btnRemoveTime);
+            this.tabPageTasks.Controls.Add(this.btnRemoveTask);
+            this.tabPageTasks.Controls.Add(this.btnAddTime);
+            this.tabPageTasks.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTasks.Name = "tabPageTasks";
+            this.tabPageTasks.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageTasks.Size = new System.Drawing.Size(326, 260);
+            this.tabPageTasks.TabIndex = 0;
+            this.tabPageTasks.Text = "Tasks";
+            this.tabPageTasks.UseVisualStyleBackColor = true;
+            // 
+            // tabPageOptions
+            // 
+            this.tabPageOptions.Controls.Add(this.dtpDayEnd);
+            this.tabPageOptions.Controls.Add(this.lblDayEnd);
+            this.tabPageOptions.Controls.Add(this.dtpDayStart);
+            this.tabPageOptions.Controls.Add(this.lblDayStart);
+            this.tabPageOptions.Location = new System.Drawing.Point(4, 22);
+            this.tabPageOptions.Name = "tabPageOptions";
+            this.tabPageOptions.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageOptions.Size = new System.Drawing.Size(326, 260);
+            this.tabPageOptions.TabIndex = 1;
+            this.tabPageOptions.Text = "Options";
+            this.tabPageOptions.UseVisualStyleBackColor = true;
+            // 
+            // lblDayStart
+            // 
+            this.lblDayStart.AutoSize = true;
+            this.lblDayStart.Location = new System.Drawing.Point(7, 12);
+            this.lblDayStart.Name = "lblDayStart";
+            this.lblDayStart.Size = new System.Drawing.Size(64, 13);
+            this.lblDayStart.TabIndex = 0;
+            this.lblDayStart.Text = "Start of day:";
+            // 
+            // dtpDayStart
+            // 
+            this.dtpDayStart.CustomFormat = "hh:mm tt";
+            this.dtpDayStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDayStart.Location = new System.Drawing.Point(77, 8);
+            this.dtpDayStart.Name = "dtpDayStart";
+            this.dtpDayStart.ShowUpDown = true;
+            this.dtpDayStart.Size = new System.Drawing.Size(75, 20);
+            this.dtpDayStart.TabIndex = 1;
+            this.dtpDayStart.Value = new System.DateTime(2011, 9, 22, 8, 30, 0, 0);
+            // 
+            // lblDayEnd
+            // 
+            this.lblDayEnd.AutoSize = true;
+            this.lblDayEnd.Location = new System.Drawing.Point(7, 38);
+            this.lblDayEnd.Name = "lblDayEnd";
+            this.lblDayEnd.Size = new System.Drawing.Size(61, 13);
+            this.lblDayEnd.TabIndex = 2;
+            this.lblDayEnd.Text = "End of day:";
+            // 
+            // dtpDayEnd
+            // 
+            this.dtpDayEnd.CustomFormat = "hh:mm tt";
+            this.dtpDayEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDayEnd.Location = new System.Drawing.Point(77, 34);
+            this.dtpDayEnd.Name = "dtpDayEnd";
+            this.dtpDayEnd.ShowUpDown = true;
+            this.dtpDayEnd.Size = new System.Drawing.Size(75, 20);
+            this.dtpDayEnd.TabIndex = 3;
+            this.dtpDayEnd.Value = new System.DateTime(2011, 9, 22, 17, 0, 0, 0);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(456, 306);
+            this.ClientSize = new System.Drawing.Size(460, 310);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnReport);
             this.Controls.Add(this.btnAbout);
             this.Controls.Add(this.btnClearCounters);
-            this.Controls.Add(this.grpTasks);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
             this.Text = "TimeBuddy Settings";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
             this.Load += new System.EventHandler(this.SettingsForm_Load);
-            this.grpTasks.ResumeLayout(false);
-            this.grpTasks.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAdjust)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPageTasks.ResumeLayout(false);
+            this.tabPageTasks.PerformLayout();
+            this.tabPageOptions.ResumeLayout(false);
+            this.tabPageOptions.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox grpTasks;
         private System.Windows.Forms.Button btnRemoveTime;
         private System.Windows.Forms.Button btnAddTime;
         private System.Windows.Forms.Button btnRemoveTask;
@@ -196,6 +272,13 @@
         private System.Windows.Forms.TextBox txtNewTask;
         private System.Windows.Forms.NumericUpDown numAdjust;
         private System.Windows.Forms.Button btnReport;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPageTasks;
+        private System.Windows.Forms.TabPage tabPageOptions;
+        private System.Windows.Forms.DateTimePicker dtpDayEnd;
+        private System.Windows.Forms.Label lblDayEnd;
+        private System.Windows.Forms.DateTimePicker dtpDayStart;
+        private System.Windows.Forms.Label lblDayStart;
     }
 }
 

@@ -23,18 +23,24 @@ namespace TimeBuddy
             InitializeComponent();
 
             _timeBuddy = timeBuddy;
+
+            // Copy in settings
+            DateTime dt = new DateTime(2011, 9, 22, _timeBuddy.Settings.StartHour, _timeBuddy.Settings.StartMinute, 0);
+            dtpDayStart.Value = dt;
+            dt = new DateTime(2011, 9, 22, _timeBuddy.Settings.EndHour, _timeBuddy.Settings.EndMinute, 0);
+            dtpDayEnd.Value = dt;
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
-            lstTasks.DataSource = _timeBuddy.Tasks;
+            lstTasks.DataSource = _timeBuddy.Settings.Tasks;
         }
 
         private void btnAddTask_Click(object sender, EventArgs e)
         {
             if (txtNewTask.Text.Length > 0)
             {
-                _timeBuddy.Tasks.Add(new Task(txtNewTask.Text));
+                _timeBuddy.Settings.Tasks.Add(new Task(txtNewTask.Text));
                 txtNewTask.Text = "";
                 ReloadTasks();
             }
@@ -58,7 +64,7 @@ namespace TimeBuddy
             {
                 foreach (Task task in lstTasks.SelectedItems)
                 {
-                    _timeBuddy.Tasks.Remove(task);
+                    _timeBuddy.Settings.Tasks.Remove(task);
                 }
 
                 ReloadTasks();
@@ -68,7 +74,7 @@ namespace TimeBuddy
         private void ReloadTasks()
         {
             lstTasks.DataSource = null;
-            lstTasks.DataSource = _timeBuddy.Tasks;
+            lstTasks.DataSource = _timeBuddy.Settings.Tasks;
         }
 
         private void btnAddTime_Click(object sender, EventArgs e)
@@ -99,7 +105,7 @@ namespace TimeBuddy
 
             if (res == DialogResult.Yes)
             {
-                foreach (Task task in _timeBuddy.Tasks)
+                foreach (Task task in _timeBuddy.Settings.Tasks)
                 {
                     task.Clear();
                 }
@@ -156,6 +162,20 @@ namespace TimeBuddy
         {
             ReportForm frm = new ReportForm(_timeBuddy);
             frm.Show();
+        }
+
+        /***************************************************************
+         * SettingsForm_FormClosing()
+         * 
+         *   |FormClosing| event handler for the form.  Passes all user
+         *   options back up to TimeBuddy.
+         */
+        private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _timeBuddy.Settings.StartHour = dtpDayStart.Value.Hour;
+            _timeBuddy.Settings.StartMinute = dtpDayStart.Value.Minute;
+            _timeBuddy.Settings.EndHour = dtpDayEnd.Value.Hour;
+            _timeBuddy.Settings.EndMinute = dtpDayEnd.Value.Minute;
         }
 
     }

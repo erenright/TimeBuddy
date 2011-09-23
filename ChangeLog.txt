@@ -7,8 +7,14 @@ Last updated: September 2, 2011 for v1.2.1
 
 v1.3.0 - Unreleased
 
+  * CAUTION: The save file of this version is NOT compatible
+    with previous versions, and a file from a previous version
+    will be IGNORED and REPLACED.
   * Change the icon to be red when paused, for greater visual
     notification.
+  * Addition of "Options" tab to Settings, which allows one to
+    specify the start and end of the work day.  Currently only
+    the end of day is used.
 
 
 v1.2.1 - September 2, 2011
