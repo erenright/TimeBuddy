@@ -115,13 +115,17 @@
             // 
             // lstTasks
             // 
+            this.lstTasks.AllowDrop = true;
             this.lstTasks.FormattingEnabled = true;
             this.lstTasks.Location = new System.Drawing.Point(0, 0);
             this.lstTasks.Name = "lstTasks";
             this.lstTasks.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lstTasks.Size = new System.Drawing.Size(323, 199);
             this.lstTasks.TabIndex = 0;
+            this.lstTasks.DragDrop += new System.Windows.Forms.DragEventHandler(this.lstTasks_DragDrop);
+            this.lstTasks.DragOver += new System.Windows.Forms.DragEventHandler(this.lstTasks_DragOver);
             this.lstTasks.DoubleClick += new System.EventHandler(this.lstTasks_DoubleClick);
+            this.lstTasks.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstTasks_MouseDown);
             // 
             // btnClearCounters
             // 

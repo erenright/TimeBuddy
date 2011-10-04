@@ -196,5 +196,49 @@ namespace TimeBuddy
             }
         }
 
+        /*
+         * Starts up drag and drop for reordering tasks.
+         */
+        private void lstTasks_MouseDown(object sender, MouseEventArgs e)
+        {
+            // Only look at doing a drag and drop for a single click
+            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            {
+                if (lstTasks.SelectedItem == null)
+                    return;
+
+                lstTasks.DoDragDrop(lstTasks.SelectedItem, DragDropEffects.Move);
+            }
+        }
+
+        /*
+         * Repositions the "moving" bar when dragging and dropping.
+         */
+        private void lstTasks_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        /*
+         * Completes the drag and drop function, moving the selected task.
+         */
+        private void lstTasks_DragDrop(object sender, DragEventArgs e)
+        {
+            // Find our newly selected index
+            Point point = lstTasks.PointToClient(new Point(e.X, e.Y));
+            int index = lstTasks.IndexFromPoint(point);
+
+            // If an invalid slot is selected, default to the end
+            if (index < 0)
+                index = lstTasks.Items.Count - 1;
+
+            // Move the task
+            Task task = (Task)e.Data.GetData(typeof(Task));
+            _timeBuddy.Settings.Tasks.Remove(task);
+            _timeBuddy.Settings.Tasks.Insert(index, task);
+
+            ReloadTasks();
+        }
+
     }
 }
