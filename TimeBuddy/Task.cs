@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Task.cs
+ * 
+ * Copyright (C) 2011 5amsoftware
+ * 
+ * All rights reserved.  Distribution an modification strictly prohibited.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,79 +15,46 @@ namespace TimeBuddy
 {
     public class Task
     {
-        private string _Name;
-        private int _seconds = 0;
-        private bool _active = false;
+        private string _Name;                   // Name of the task
+        private int _seconds = 0;               // Number of seconds the task has been active (running counter)
+        private bool _active = false;           // Whether or not the task is active.  If true, no other tasks are.
 
         public bool Active
         {
-            set
-            {
-                _active = value;
-            }
-
-            get
-            {
-                return _active;
-            }
+            set { _active = value; }
+            get { return _active; }
         }
 
         public string Name
         {
-            set
-            {
-                _Name = value;
-            }
-
-            get
-            {
-                return _Name;
-            }
+            set { _Name = value; }
+            get { return _Name; }
         }
 
         public int RawSeconds
         {
-            get
-            {
-                return _seconds;
-            }
-
-            set
-            {
-                _seconds = value;
-            }
+            get { return _seconds; }
+            set { _seconds = value; }
         }
 
         public int Minutes
         {
-            get
-            {
-                return (RawSeconds - (Hours * 60 * 60)) / 60;
-            }
+            get { return (RawSeconds - (Hours * 60 * 60)) / 60; }
         }
 
         public decimal HoursFractional
         {
-            get
-            {
-                return Math.Round(Hours + ((decimal)Minutes / 60), 2);
-            }
+            get { return Math.Round(Hours + ((decimal)Minutes / 60), 2); }
         }
 
         public int Hours
         {
-            get
-            {
-                return RawSeconds / 60 / 60;
-            }
+            get { return RawSeconds / 60 / 60; }
         }
 
         public string HHMM
         {
-            get
-            {
-                return String.Format("{0}:{1:00}", Hours, Minutes);
-            }
+            get { return String.Format("{0}:{1:00}", Hours, Minutes); }
         }
 
         public Task()
@@ -92,6 +67,10 @@ namespace TimeBuddy
             Name = name;
         }
 
+        /*
+         * Tick function called once per second.  Increments the
+         * seconds counter.
+         */
         public void Tick()
         {
             if (Active)

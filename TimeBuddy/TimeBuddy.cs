@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * TimeBuddy.cs
+ * 
+ * Copyright (C) 2011 5amsoftware
+ * 
+ * All rights reserved.  Distribution an modification strictly prohibited.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,10 +41,7 @@ namespace TimeBuddy
 
         private Boolean Paused
         {
-            get
-            {
-                return _paused;
-            }
+            get { return _paused; }
 
             set
             {
@@ -89,7 +94,7 @@ namespace TimeBuddy
 
             try
             {
-                DeserializeFromXML();
+                LoadSettings();
             }
             catch (Exception)
             {
@@ -178,7 +183,7 @@ namespace TimeBuddy
 
                 try
                 {
-                    SerializeToXML();
+                    SaveSettings();
                 }
                 catch (Exception)
                 {
@@ -290,7 +295,7 @@ namespace TimeBuddy
         {
             try
             {
-                SerializeToXML();
+                SaveSettings();
             }
             catch (Exception)
             {
@@ -322,7 +327,10 @@ namespace TimeBuddy
 
         }
 
-        public void SerializeToXML()
+        /*
+         * Save user settings.  This simply uses an XmlSerializer.
+         */
+        public void SaveSettings()
         {
             TextWriter w = null;
 
@@ -343,29 +351,19 @@ namespace TimeBuddy
             }
         }
 
-        public void DeserializeFromXML()
+        /*
+         * Load settings.  Because we want to allow upgrades from previous
+         * versions, we do no use XmlSerializer here but instead use the
+         * Settings class itself.  Any exceptions are propogated out.
+         */
+        public void LoadSettings()
         {
-            TextReader r = null;
-
-            try
+            _settings = new Settings();
+            if (_settings.Load(Application.UserAppDataPath + @"\..\tasks.xml"))
             {
-                XmlSerializer s = new XmlSerializer(typeof(Settings));
-                r = new StreamReader(Application.UserAppDataPath + @"\\..\\tasks.xml");
-                _settings = (Settings)s.Deserialize(r);
-                r.Close();
-
-                // Ensure no tasks are active
-                foreach (Task t in Settings.Tasks)
-                    t.Active = false;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            finally
-            {
-                if (r != null)
-                    r.Close();
+                // Previous version was imported
+                MessageBox.Show("Settings from a previous version were found and have been imported.",
+                    "TimeBuddy", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
