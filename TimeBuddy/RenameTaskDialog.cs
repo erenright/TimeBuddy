@@ -34,6 +34,7 @@ namespace TimeBuddy
 
             _task = task;
             txtTaskName.Text = task.Name;
+            nudMaxMinutes.Value = task.MaxSeconds / 60;
         }
 
         /***************************************************************
@@ -45,6 +46,10 @@ namespace TimeBuddy
         private void btnOk_Click(object sender, EventArgs e)
         {
             _task.Name = txtTaskName.Text.Trim();
+
+            // Can't fail since we forbid decimals
+            _task.MaxSeconds = Convert.ToInt32(nudMaxMinutes.Value) * 60;
+
             Close();
         }
 

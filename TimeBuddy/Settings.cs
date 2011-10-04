@@ -181,16 +181,134 @@ namespace TimeBuddy
         }
 
         /*
-         * Imports/loads version 0.1 of the settings file.  This format
-         * piggy backs on version 0.
+         * Imports/loads version 0.1 of the settings file.
          */
         private void Load_Version0_1(XmlElement root)
         {
-            // Load basic stuff
-            Load_Version0(root);
+            // Load StartHour
+            XmlNodeList nodes = root.GetElementsByTagName("StartHour");
+            if (nodes == null || nodes.Count == 0 || nodes.Count > 1)
+                throw new Exception("Version0 missing StartHour");
 
-            // Load new items
-            // ...
+            string startHour = nodes[0].InnerText;
+
+            try
+            {
+                StartHour = Convert.ToInt32(startHour);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Version0 corrupt StartHour", e);
+            }
+
+
+            // Load StartMinute
+            nodes = root.GetElementsByTagName("StartMinute");
+            if (nodes == null || nodes.Count == 0 || nodes.Count > 1)
+                throw new Exception("Version0 missing StartMinute");
+
+            string startMinute = nodes[0].InnerText;
+
+            try
+            {
+                StartMinute = Convert.ToInt32(startMinute);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Version0 corrupt StartMinute", e);
+            }
+
+            // Load EndHour
+            nodes = root.GetElementsByTagName("EndHour");
+            if (nodes == null || nodes.Count == 0 || nodes.Count > 1)
+                throw new Exception("Version0 missing EndHour");
+
+            string endHour = nodes[0].InnerText;
+
+            try
+            {
+                EndHour = Convert.ToInt32(endHour);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Version0 corrupt EndHour", e);
+            }
+
+
+            // Load EndMinute
+            nodes = root.GetElementsByTagName("EndMinute");
+            if (nodes == null || nodes.Count == 0 || nodes.Count > 1)
+                throw new Exception("Version0 missing EndMinute");
+
+            string endMinute = nodes[0].InnerText;
+
+            try
+            {
+                EndMinute = Convert.ToInt32(endMinute);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Version0 corrupt EndMinute", e);
+            }
+
+
+            // Load tasks
+            nodes = root.GetElementsByTagName("Task");
+            if (nodes == null)
+                throw new Exception("Version0 missing tasks");
+
+            _tasks = new List<Task>();
+
+            foreach (XmlNode node in nodes)
+            {
+                XmlNodeList childNodes = node.ChildNodes;
+                if (childNodes == null)
+                    throw new Exception("Version0 has invalid tasks");
+
+                string name = "";
+                int seconds = -123456; // Unlikely to be found in the wild
+                int maxSeconds = -123456;
+
+                foreach (XmlNode childNode in childNodes)
+                {
+                    if (childNode.Name == "Name")
+                    {
+                        name = childNode.InnerText;
+                    }
+                    else if (childNode.Name == "RawSeconds")
+                    {
+                        try
+                        {
+                            seconds = Convert.ToInt32(childNode.InnerText);
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception("Version0 has invalid tasks", e);
+                        }
+                    }
+                    else if (childNode.Name == "MaxSeconds")
+                    {
+                        try
+                        {
+                            maxSeconds = Convert.ToInt32(childNode.InnerText);
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception("Version0 has invalid tasks", e);
+                        }
+                    }
+                }
+
+                if (name == "" || seconds == -123456 || maxSeconds == -123456)
+                    throw new Exception("Version0 has invalid tasks");
+
+                Task task = new Task();
+                task.Name = name;
+                task.RawSeconds = seconds;
+                task.MaxSeconds = maxSeconds;
+
+                _tasks.Add(task);
+            }
         }
 
         /*

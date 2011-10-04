@@ -18,6 +18,7 @@ namespace TimeBuddy
         private string _Name;                   // Name of the task
         private int _seconds = 0;               // Number of seconds the task has been active (running counter)
         private bool _active = false;           // Whether or not the task is active.  If true, no other tasks are.
+        private int _maxSeconds = 0;            // Max. seconds to be tracked before a warning is issued. Zero to disable.
 
         public bool Active
         {
@@ -36,6 +37,14 @@ namespace TimeBuddy
             get { return _seconds; }
             set { _seconds = value; }
         }
+
+        public int MaxSeconds
+        {
+            get { return _maxSeconds; }
+            set { _maxSeconds = value; }
+        }
+
+        // Stuff below this line should not be serialized
 
         public int Minutes
         {

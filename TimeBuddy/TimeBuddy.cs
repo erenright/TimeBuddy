@@ -21,6 +21,15 @@ namespace TimeBuddy
 {
     public class TimeBuddy : Form
     {
+        #region Event and Delegate Definitions
+
+        private delegate void TaskTimeExceededHandler(Task task);
+        private event TaskTimeExceededHandler TaskTimeExceeded;
+
+        #endregion
+
+        #region Fields, Accessors, and Mutators
+
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
         private System.Timers.Timer timer;
@@ -68,6 +77,8 @@ namespace TimeBuddy
             }
         }
 
+        #endregion
+
         public TimeBuddy()
         {
             // The normal icon comes from the SettingsForm, which the paused icon is a custom resource
@@ -114,6 +125,9 @@ namespace TimeBuddy
                 Settings.EndMinute = 0;
             }
 
+            // Install custom event handlers
+            TaskTimeExceeded += OnTaskTimeExceeded;
+
             // Enable the timer only after everything has been loaded
             trayIcon.Visible = true;
             timer.Enabled = true;
@@ -129,6 +143,20 @@ namespace TimeBuddy
         {
             Form f = new SettingsForm(this);
             f.Show();
+        }
+
+        /*
+         * Causes a balloon tip to be displayed to the user
+         * indicating that their current task has reached its
+         * allocated time.
+         */
+        private void OnTaskTimeExceeded(Task task)
+        {
+            trayIcon.ShowBalloonTip(
+                1000 * 30,
+                "TimeBuddy",
+                "Your allocated time for this task has been exceeded.",
+                ToolTipIcon.Info);
         }
 
         public void RebuildMenu()
@@ -161,8 +189,10 @@ namespace TimeBuddy
          *   
          *     1. Updates the icon tooltip with the current task.
          *     2. Ticks each task.
-         *     3. Saves the counters to disk once per minute.
-         *     4. Checks if we have transitioned from 4:59pm to
+         *     3. Checks each task to see if they have exceeded their
+         *        maximum allotted time, and if so, notified the user.
+         *     4. Saves the counters to disk once per minute.
+         *     5. Checks if we have transitioned from 4:59pm to
          *        5pm, and if so, pause the counter and prompt the
          *        user to continue.
          */
@@ -171,6 +201,19 @@ namespace TimeBuddy
             foreach (Task task in _settings.Tasks)
             {
                 task.Tick();
+
+                // Has this task exceeded the maximum allotted time?
+                // Only check for a difference of one tick to prevent
+                // notifying the user on subsequent ticks or on time
+                // manipulation via the Settings window
+                if (task.MaxSeconds > 0)
+                {
+                    if (task.RawSeconds == task.MaxSeconds + 1)
+                    {
+                        // Threshold exceeded
+                        TaskTimeExceeded(task);
+                    }
+                }
 
                 if (task.Active)
                     trayIcon.Text = task.ToString();

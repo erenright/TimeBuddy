@@ -32,6 +32,9 @@
             this.txtTaskName = new System.Windows.Forms.TextBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.lblMaxMinutes = new System.Windows.Forms.Label();
+            this.nudMaxMinutes = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxMinutes)).BeginInit();
             this.SuspendLayout();
             // 
             // lblRenameTask
@@ -39,20 +42,20 @@
             this.lblRenameTask.AutoSize = true;
             this.lblRenameTask.Location = new System.Drawing.Point(12, 15);
             this.lblRenameTask.Name = "lblRenameTask";
-            this.lblRenameTask.Size = new System.Drawing.Size(73, 13);
+            this.lblRenameTask.Size = new System.Drawing.Size(63, 13);
             this.lblRenameTask.TabIndex = 0;
-            this.lblRenameTask.Text = "Rename task:";
+            this.lblRenameTask.Text = "Task name:";
             // 
             // txtTaskName
             // 
-            this.txtTaskName.Location = new System.Drawing.Point(91, 12);
+            this.txtTaskName.Location = new System.Drawing.Point(81, 12);
             this.txtTaskName.Name = "txtTaskName";
-            this.txtTaskName.Size = new System.Drawing.Size(175, 20);
+            this.txtTaskName.Size = new System.Drawing.Size(185, 20);
             this.txtTaskName.TabIndex = 1;
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(15, 51);
+            this.btnOk.Location = new System.Drawing.Point(15, 64);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 2;
@@ -62,7 +65,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(191, 51);
+            this.btnCancel.Location = new System.Drawing.Point(191, 64);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
@@ -70,11 +73,34 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // lblMaxMinutes
+            // 
+            this.lblMaxMinutes.AutoSize = true;
+            this.lblMaxMinutes.Location = new System.Drawing.Point(12, 41);
+            this.lblMaxMinutes.Name = "lblMaxMinutes";
+            this.lblMaxMinutes.Size = new System.Drawing.Size(70, 13);
+            this.lblMaxMinutes.TabIndex = 4;
+            this.lblMaxMinutes.Text = "Max Minutes:";
+            // 
+            // nudMaxMinutes
+            // 
+            this.nudMaxMinutes.Location = new System.Drawing.Point(81, 39);
+            this.nudMaxMinutes.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.nudMaxMinutes.Name = "nudMaxMinutes";
+            this.nudMaxMinutes.Size = new System.Drawing.Size(58, 20);
+            this.nudMaxMinutes.TabIndex = 5;
+            // 
             // RenameTaskDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(278, 86);
+            this.ClientSize = new System.Drawing.Size(278, 96);
+            this.Controls.Add(this.nudMaxMinutes);
+            this.Controls.Add(this.lblMaxMinutes);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.txtTaskName);
@@ -85,7 +111,8 @@
             this.Name = "RenameTaskDialog";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "Rename Task";
+            this.Text = "Task Settings";
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxMinutes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -97,5 +124,7 @@
         private System.Windows.Forms.TextBox txtTaskName;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label lblMaxMinutes;
+        private System.Windows.Forms.NumericUpDown nudMaxMinutes;
     }
 }
