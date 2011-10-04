@@ -57,6 +57,10 @@
 			<param name="Name" value="End of Day Pause">
 			<param name="Local" value="End of day pause.htm">
 			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Maximum Time on a Task">
+			<param name="Local" value="Maximum Time.htm">
+			</OBJECT>
 	</UL>
 </UL>
 </BODY></HTML>

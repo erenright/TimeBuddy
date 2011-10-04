@@ -1,8 +1,18 @@
 Changelog for TimeBuddy.
 
-Last updated: September 22, 2011 for v1.3.0
+Last updated: October 3, 2011 for v1.4.0
 
 
+
+
+v1.4.0 - October 3, 2011
+
+  * Ability to import settings and tasks from previous versions.
+  * New feature to specify a maximum number of minutes to work
+    on a specific task.  Exceeding this value causes a notification
+    to the user.
+  * New feature to reorder tasks via drag and drop in the Settings
+    window.
 
 
 v1.3.0 - September 22, 2011
