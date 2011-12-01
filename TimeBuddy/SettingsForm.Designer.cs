@@ -47,6 +47,8 @@
             this.dtpDayStart = new System.Windows.Forms.DateTimePicker();
             this.lblDayStart = new System.Windows.Forms.Label();
             this.btnHelp = new System.Windows.Forms.Button();
+            this.chkHourlyReminder = new System.Windows.Forms.CheckBox();
+            this.txtHourlyReminder = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numAdjust)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPageTasks.SuspendLayout();
@@ -186,6 +188,8 @@
             // 
             // tabPageOptions
             // 
+            this.tabPageOptions.Controls.Add(this.txtHourlyReminder);
+            this.tabPageOptions.Controls.Add(this.chkHourlyReminder);
             this.tabPageOptions.Controls.Add(this.dtpDayEnd);
             this.tabPageOptions.Controls.Add(this.lblDayEnd);
             this.tabPageOptions.Controls.Add(this.dtpDayStart);
@@ -248,6 +252,23 @@
             this.btnHelp.UseVisualStyleBackColor = true;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
+            // chkHourlyReminder
+            // 
+            this.chkHourlyReminder.AutoSize = true;
+            this.chkHourlyReminder.Location = new System.Drawing.Point(6, 60);
+            this.chkHourlyReminder.Name = "chkHourlyReminder";
+            this.chkHourlyReminder.Size = new System.Drawing.Size(104, 17);
+            this.chkHourlyReminder.TabIndex = 4;
+            this.chkHourlyReminder.Text = "Hourly Reminder";
+            this.chkHourlyReminder.UseVisualStyleBackColor = true;
+            // 
+            // txtHourlyReminder
+            // 
+            this.txtHourlyReminder.Location = new System.Drawing.Point(116, 58);
+            this.txtHourlyReminder.Name = "txtHourlyReminder";
+            this.txtHourlyReminder.Size = new System.Drawing.Size(204, 20);
+            this.txtHourlyReminder.TabIndex = 5;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -296,6 +317,8 @@
         private System.Windows.Forms.DateTimePicker dtpDayStart;
         private System.Windows.Forms.Label lblDayStart;
         private System.Windows.Forms.Button btnHelp;
+        private System.Windows.Forms.TextBox txtHourlyReminder;
+        private System.Windows.Forms.CheckBox chkHourlyReminder;
     }
 }
 

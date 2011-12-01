@@ -26,6 +26,9 @@ namespace TimeBuddy
         private delegate void TaskTimeExceededHandler(Task task);
         private event TaskTimeExceededHandler TaskTimeExceeded;
 
+        private delegate void HourlyReminderHandler();
+        private event HourlyReminderHandler HourlyReminder;
+
         #endregion
 
         #region Fields, Accessors, and Mutators
@@ -34,6 +37,7 @@ namespace TimeBuddy
         private ContextMenu trayMenu;
         private System.Timers.Timer timer;
         private int saveCounter = 0;
+        private int hourlyReminderCounter = 0;
         private Boolean _paused = false;
         private DateTime lastTick;
 
@@ -123,10 +127,15 @@ namespace TimeBuddy
                 Settings.StartMinute = 30;
                 Settings.EndHour = 17;
                 Settings.EndMinute = 0;
+
+                // Hourly reminder
+                Settings.HourlyReminderEnabled = false;
+                Settings.HourlyReminder = "Stretch your legs - take a short walk.";
             }
 
             // Install custom event handlers
             TaskTimeExceeded += OnTaskTimeExceeded;
+            HourlyReminder += OnHourlyReminder;
 
             // Enable the timer only after everything has been loaded
             trayIcon.Visible = true;
@@ -156,6 +165,24 @@ namespace TimeBuddy
                 1000 * 30,
                 "TimeBuddy",
                 "Your allocated time for this task has been exceeded.",
+                ToolTipIcon.Info);
+        }
+
+        /*
+         * Causes a balloon tip to be displayed to the user
+         * with text of their hourly reminder.
+         */
+        private void OnHourlyReminder()
+        {
+            string msg = _settings.HourlyReminder.Trim();
+
+            if (msg.Length <= 0)
+                msg = "Hourly reminder (message empty)";
+
+            trayIcon.ShowBalloonTip(
+                1000 * 30,
+                "TimeBuddy",
+                msg,
                 ToolTipIcon.Info);
         }
 
@@ -232,6 +259,15 @@ namespace TimeBuddy
                 {
                     MessageBox.Show("Failed to save tasks.", "TimeBuddy", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+
+            // Hourly reminder once per hour
+            if (++hourlyReminderCounter >= (60 * 60))
+            {
+                hourlyReminderCounter = 0;
+
+                if (_settings.HourlyReminderEnabled)
+                    HourlyReminder();
             }
 
             //

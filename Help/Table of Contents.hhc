@@ -61,6 +61,10 @@
 			<param name="Name" value="Maximum Time on a Task">
 			<param name="Local" value="Maximum Time.htm">
 			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Hourly Reminders">
+			<param name="Local" value="Hourly Reminders.htm">
+			</OBJECT>
 	</UL>
 </UL>
 </BODY></HTML>

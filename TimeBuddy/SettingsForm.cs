@@ -29,6 +29,8 @@ namespace TimeBuddy
             dtpDayStart.Value = dt;
             dt = new DateTime(2011, 9, 22, _timeBuddy.Settings.EndHour, _timeBuddy.Settings.EndMinute, 0);
             dtpDayEnd.Value = dt;
+            chkHourlyReminder.Checked = _timeBuddy.Settings.HourlyReminderEnabled;
+            txtHourlyReminder.Text = _timeBuddy.Settings.HourlyReminder;
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -176,6 +178,8 @@ namespace TimeBuddy
             _timeBuddy.Settings.StartMinute = dtpDayStart.Value.Minute;
             _timeBuddy.Settings.EndHour = dtpDayEnd.Value.Hour;
             _timeBuddy.Settings.EndMinute = dtpDayEnd.Value.Minute;
+            _timeBuddy.Settings.HourlyReminderEnabled = chkHourlyReminder.Checked;
+            _timeBuddy.Settings.HourlyReminder = txtHourlyReminder.Text.Trim();
         }
 
         /***************************************************************
