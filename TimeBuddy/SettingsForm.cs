@@ -6,11 +6,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace TimeBuddy
 {
     public partial class SettingsForm : Form
     {
+        [DllImport("user32.dll")]
+        static extern short GetKeyState(int key);
+
         private TimeBuddy _timeBuddy;
 
         public SettingsForm()
@@ -205,8 +209,22 @@ namespace TimeBuddy
          */
         private void lstTasks_MouseDown(object sender, MouseEventArgs e)
         {
-            // Only look at doing a drag and drop for a single click
-            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            bool ctrlPressed = false;
+            bool shiftPressed = false;
+
+            short k = GetKeyState(0x10);    // Shift
+            if (k != 0 && k != 1)
+                shiftPressed = true;
+
+            k = GetKeyState(0x11);          // Control
+            if (k != 0 && k != 1)
+                ctrlPressed = true;
+
+            // Only look at doing a drag and drop for a single click.
+            // Control and Shift keys must not be down, otherwise this
+            // indicates item selection
+            if (e.Button == MouseButtons.Left && e.Clicks == 1
+                && !(shiftPressed || ctrlPressed))
             {
                 if (lstTasks.SelectedItem == null)
                     return;
