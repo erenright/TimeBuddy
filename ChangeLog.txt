@@ -1,8 +1,16 @@
 Changelog for TimeBuddy.
 
-Last updated: October 3, 2011 for v1.4.0
+Last updated: November 30, 2011 for v1.5.0
 
 
+
+
+v1.5.0 - November 30, 2011
+
+  * New feature to pop up an arbitrary reminder once per hour.
+  * Fix bug preventing consistent removal of multiple
+    consecutive/adjacent tasks.
+    
 
 
 v1.4.0 - October 3, 2011
