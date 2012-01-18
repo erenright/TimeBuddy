@@ -101,7 +101,7 @@ namespace TimeBuddy
 
         public override string ToString()
         {
-            return String.Format("{0} - {1}:{2:00}", Name, Hours, Minutes);
+            return String.Format("{0}{1} - {2}:{3:00}", Active ? "* " : "", Name, Hours, Minutes);
         }
     }
 }

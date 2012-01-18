@@ -242,7 +242,7 @@ namespace TimeBuddy
                 }
 
                 if (task.Active)
-                    trayIcon.Text = task.ToString();
+                    trayIcon.Text = task.ToString().Substring(2); // Strip leading "* "
             }
 
             // Save tasks once per minute
