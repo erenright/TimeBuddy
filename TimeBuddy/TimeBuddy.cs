@@ -40,6 +40,7 @@ namespace TimeBuddy
         private int hourlyReminderCounter = 0;
         private Boolean _paused = true;
         private DateTime lastTick;
+        private bool showingTimeExceeded = false;
 
         // Icons used by the system tray icon
         private Icon normalIcon;
@@ -100,6 +101,7 @@ namespace TimeBuddy
             trayIcon.ContextMenu = trayMenu;
             trayIcon.MouseDoubleClick += new MouseEventHandler(trayIcon_MouseDoubleClick);
             trayIcon.MouseClick += new MouseEventHandler(trayIcon_MouseClick);
+            trayIcon.BalloonTipClosed += new EventHandler(trayIcon_BalloonTipClosed);
 
             timer = new System.Timers.Timer();
             timer.Elapsed += new ElapsedEventHandler(OnTimerTick);
@@ -154,6 +156,15 @@ namespace TimeBuddy
         }
 
         /*
+         * Clears the showing time exceeded balloon tip flag.  This happens
+         * for any closing, but works nonetheless.
+         */
+        void trayIcon_BalloonTipClosed(Object sender, EventArgs e)
+        {
+            showingTimeExceeded = false;
+        }
+
+        /*
          * Causes a balloon tip to be displayed to the user
          * indicating that their current task has reached its
          * allocated time.
@@ -165,6 +176,8 @@ namespace TimeBuddy
                 "TimeBuddy",
                 "Your allocated time for this task has been exceeded.",
                 ToolTipIcon.Info);
+
+            showingTimeExceeded = true;
         }
 
         /*
@@ -173,16 +186,20 @@ namespace TimeBuddy
          */
         private void OnHourlyReminder()
         {
-            string msg = _settings.HourlyReminder.Trim();
+            // Only show this if not showing the time exceeded balloon
+            if (!showingTimeExceeded)
+            {
+                string msg = _settings.HourlyReminder.Trim();
 
-            if (msg.Length <= 0)
-                msg = "Hourly reminder (message empty)";
+                if (msg.Length <= 0)
+                    msg = "Hourly reminder (message empty)";
 
-            trayIcon.ShowBalloonTip(
-                1000 * 30,
-                "TimeBuddy",
-                msg,
-                ToolTipIcon.Info);
+                trayIcon.ShowBalloonTip(
+                    1000 * 30,
+                    "TimeBuddy",
+                    msg,
+                    ToolTipIcon.Info);
+            }
         }
 
         public void RebuildMenu()
