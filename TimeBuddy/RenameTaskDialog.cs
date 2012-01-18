@@ -37,6 +37,17 @@ namespace TimeBuddy
             nudMaxMinutes.Value = task.MaxSeconds / 60;
         }
 
+        /*
+         * Sanitize the data for upper layers
+         */
+        private void SanitizeData()
+        {
+            _task.Name = txtTaskName.Text.Trim();
+
+            // Can't fail since we forbid decimals
+            _task.MaxSeconds = Convert.ToInt32(nudMaxMinutes.Value) * 60;
+        }
+
         /***************************************************************
          * btnOk_Click()
          * 
@@ -45,10 +56,7 @@ namespace TimeBuddy
          */
         private void btnOk_Click(object sender, EventArgs e)
         {
-            _task.Name = txtTaskName.Text.Trim();
-
-            // Can't fail since we forbid decimals
-            _task.MaxSeconds = Convert.ToInt32(nudMaxMinutes.Value) * 60;
+            SanitizeData();
 
             Close();
         }
@@ -62,6 +70,18 @@ namespace TimeBuddy
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        /*
+         * If ENTER was pressed, then the same as clicking "OK".
+         */
+        private void txtTaskName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                SanitizeData();
+                Close();
+            }
         }
     }
 }

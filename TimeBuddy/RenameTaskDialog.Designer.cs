@@ -52,6 +52,7 @@
             this.txtTaskName.Name = "txtTaskName";
             this.txtTaskName.Size = new System.Drawing.Size(185, 20);
             this.txtTaskName.TabIndex = 1;
+            this.txtTaskName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTaskName_KeyPress);
             // 
             // btnOk
             // 
