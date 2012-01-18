@@ -46,8 +46,18 @@ namespace TimeBuddy
         {
             if (txtNewTask.Text.Length > 0)
             {
-                _timeBuddy.Settings.Tasks.Add(new Task(txtNewTask.Text));
+                // Mark old tasks inactive
+                foreach (Task task in _timeBuddy.Settings.Tasks)
+                    task.Active = false;
+
+                // Create new task
+                Task newTask = new Task(txtNewTask.Text);
+                _timeBuddy.Settings.Tasks.Add(newTask);
                 txtNewTask.Text = "";
+
+                // New task is active
+                newTask.Active = true;
+
                 ReloadTasks();
             }
         }
@@ -56,6 +66,10 @@ namespace TimeBuddy
         {
             foreach (Task task in lstTasks.SelectedItems)
             {
+                // If this task is active, pause the timer
+                if (task.Active)
+                    _timeBuddy.Paused = true;
+
                 _timeBuddy.Settings.Tasks.Remove(task);
             }
 

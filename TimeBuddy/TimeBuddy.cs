@@ -52,7 +52,7 @@ namespace TimeBuddy
             get { return _settings; }
         }
 
-        private Boolean Paused
+        public Boolean Paused
         {
             get { return _paused; }
 
