@@ -52,6 +52,16 @@ namespace TimeBuddy
             }
         }
 
+        private void RemoveTasks()
+        {
+            foreach (Task task in lstTasks.SelectedItems)
+            {
+                _timeBuddy.Settings.Tasks.Remove(task);
+            }
+
+            ReloadTasks();
+        }
+
         private void btnRemoveTask_Click(object sender, EventArgs e)
         {
             DialogResult res;
@@ -68,12 +78,7 @@ namespace TimeBuddy
 
             if (res == DialogResult.Yes)
             {
-                foreach (Task task in lstTasks.SelectedItems)
-                {
-                    _timeBuddy.Settings.Tasks.Remove(task);
-                }
-
-                ReloadTasks();
+                RemoveTasks();
             }
         }
 
@@ -132,6 +137,12 @@ namespace TimeBuddy
             MessageBox.Show(msg, "About");
         }
 
+        /***************************************************************
+         * txtNewTask_KeyPress()
+         * 
+         *   |KeyPRess| handler for |txtNewTask|.  Wrapper around clicking
+         *   the "Add" button (add task to list) when ENTER is pressed.
+         */
         private void txtNewTask_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
@@ -260,6 +271,15 @@ namespace TimeBuddy
             _timeBuddy.Settings.Tasks.Insert(index, task);
 
             ReloadTasks();
+        }
+
+        /*
+         * If the delete key was pressed, delete the selected task(s).
+         */
+        private void lstTasks_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+                RemoveTasks();
         }
 
     }

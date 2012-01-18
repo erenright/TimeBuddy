@@ -8,6 +8,8 @@ Last updated: November 30, 2011 for v1.5.0
 v1.6.0 - January 17, 2011
 
   * Show red Paused icon when started
+  * Delete key removes tasks from task list in Settings window
+    (without confirmation prompt)
     
 
 
