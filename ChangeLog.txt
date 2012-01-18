@@ -18,6 +18,8 @@ v1.6.0 - January 17, 2012
   * Ensure TimeBuddy is paused if the active task is removed
   * Do not show the hourly reminder if a balloon tip is showing
     to state that the current tasks time allocation is exceeded
+  * Do not snap the selected task to the top of the task list in
+    the settings window for most operations.
     
 
 

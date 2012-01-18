@@ -98,8 +98,16 @@ namespace TimeBuddy
 
         private void ReloadTasks()
         {
+            // Remember currently selected index
+            int idx = lstTasks.SelectedIndex;
+
             lstTasks.DataSource = null;
             lstTasks.DataSource = _timeBuddy.Settings.Tasks;
+            lstTasks.SelectedItems.Clear();
+
+            // Restore selected index if valid
+            if (idx >= 0)
+                lstTasks.SelectedIndex = idx;
         }
 
         private void btnAddTime_Click(object sender, EventArgs e)
