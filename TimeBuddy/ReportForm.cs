@@ -29,6 +29,8 @@ namespace TimeBuddy
 
         private void ReportForm_Load(object sender, EventArgs e)
         {
+            int totalTime = 0;
+
             // Clone tasks
             List<Task> sourceTasks = _timeBuddy.Settings.Tasks.GetRange(0, _timeBuddy.Settings.Tasks.Count);
             List<Task> tasks = new List<Task>();
@@ -60,6 +62,9 @@ namespace TimeBuddy
                         summary.Add(project, task.RawSeconds);
                     }
                 }
+
+                // Tally total time
+                totalTime += task.RawSeconds;
             }
 
             foreach (string project in summary.Keys)
@@ -68,6 +73,11 @@ namespace TimeBuddy
                 task.RawSeconds = (int)summary[project];
                 tasks.Add(task);
             }
+
+            // Add fake [total] task
+            Task totalTask = new Task("[total]");
+            totalTask.RawSeconds = totalTime;
+            tasks.Add(totalTask);
 
             // We have all tasks, so go forward with the grid
             grid.DataSource = tasks;

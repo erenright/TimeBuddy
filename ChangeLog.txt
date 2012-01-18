@@ -12,6 +12,7 @@ v1.6.0 - January 17, 2012
     (without confirmation prompt)
   * Pressing Enter in the box to rename a task causes the form
     to submit (same as clicking "OK")
+  * Show pseudo "[total]" task in the report, totalling all tasks
     
 
 
