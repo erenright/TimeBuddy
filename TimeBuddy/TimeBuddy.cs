@@ -38,7 +38,7 @@ namespace TimeBuddy
         private System.Timers.Timer timer;
         private int saveCounter = 0;
         private int hourlyReminderCounter = 0;
-        private Boolean _paused = false;
+        private Boolean _paused = true;
         private DateTime lastTick;
 
         // Icons used by the system tray icon
@@ -95,8 +95,7 @@ namespace TimeBuddy
 
             trayIcon = new NotifyIcon();
             trayIcon.Text = "TimeBuddy";
-            //trayIcon.Icon = new Icon(SystemIcons.Application, 40, 40);
-            trayIcon.Icon = normalIcon; // normalIcon;
+            trayIcon.Icon = pausedIcon;
 
             trayIcon.ContextMenu = trayMenu;
             trayIcon.MouseDoubleClick += new MouseEventHandler(trayIcon_MouseDoubleClick);
@@ -351,9 +350,27 @@ namespace TimeBuddy
         private void MenuPause(object sender, EventArgs e)
         {
             if (Paused)
-                Paused = false;
+            {
+                // Taking an items off paused requires that one be active
+                bool bActive = false;
+                foreach (Task task in _settings.Tasks)
+                {
+                    if (task.Active)
+                    {
+                        bActive = true;
+                        break;
+                    }
+                }
+
+                if (bActive)
+                    Paused = false;
+                else
+                    MessageBox.Show("Select a task before unpausing.", "TimeBuddy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
             else
+            {
                 Paused = true;
+            }
 
             RebuildMenu();
         }
