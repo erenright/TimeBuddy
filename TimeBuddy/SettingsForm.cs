@@ -107,7 +107,12 @@ namespace TimeBuddy
 
             // Restore selected index if valid
             if (idx >= 0)
-                lstTasks.SelectedIndex = idx;
+            {
+                if (idx >= lstTasks.Items.Count)
+                    lstTasks.SelectedIndex = lstTasks.Items.Count - 1;
+                else
+                    lstTasks.SelectedIndex = idx;
+            }
         }
 
         private void btnAddTime_Click(object sender, EventArgs e)

@@ -1,7 +1,13 @@
 Changelog for TimeBuddy.
 
-Last updated: January 17, 2012 for v1.6.0
+Last updated: January 25, 2012 for v1.6.1
 
+
+
+
+v1.6.1 - January 25, 2012
+  * Correct unhandled exception when deleting the last task
+    in the settings list
 
 
 
