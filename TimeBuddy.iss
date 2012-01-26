@@ -1,11 +1,11 @@
 [Setup]
 AppCopyright=Copyright © 2011-2012 5amsoftware
 AppName=TimeBuddy
-AppVerName=TimeBuddy version 1.6.0
+AppVerName=TimeBuddy version 1.6.1
 DefaultDirName={pf}\TimeBuddy
 AppID={{F19F4D39-62FE-4A0E-B503-FE888AB0173F}
 DefaultGroupName=TimeBuddy
-VersionInfoVersion=1.6.0
+VersionInfoVersion=1.6.1
 VersionInfoCompany=5amsoftware
 VersionInfoDescription=TimeBuddy
 VersionInfoCopyright=Copyright © 2011-2012 5amsoftware
