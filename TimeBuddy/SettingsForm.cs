@@ -40,6 +40,17 @@ namespace TimeBuddy
         private void SettingsForm_Load(object sender, EventArgs e)
         {
             lstTasks.DataSource = _timeBuddy.Settings.Tasks;
+
+            // Determine selected index, if possible
+            foreach (Task task in _timeBuddy.Settings.Tasks)
+            {
+                if (task.Active)
+                {
+                    lstTasks.SelectedItems.Clear();
+                    lstTasks.SelectedItems.Add(task);
+                    break;
+                }
+            }
         }
 
         private void btnAddTask_Click(object sender, EventArgs e)

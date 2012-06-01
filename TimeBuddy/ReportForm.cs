@@ -38,8 +38,8 @@ namespace TimeBuddy
             // Construct initial task list
             foreach (Task task in sourceTasks)
             {
-                // If the item has time against it, count it
-                if (task.RawSeconds > 0)
+                // If the item has more than 5 minutes against it, count it
+                if (task.RawSeconds >= (60 * 5))
                     tasks.Add(task);
             }
 

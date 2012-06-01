@@ -1,7 +1,16 @@
 Changelog for TimeBuddy.
 
-Last updated: January 25, 2012 for v1.6.1
+Last updated: May 31, 2012 for v1.7.0
 
+
+
+
+v1.7.0 - May 31, 2012
+  * When opening the Settings window, the active task is
+    now selected by default in the task list box.
+  * Tasks must have at least 5 minutes tracked against them
+    in order to be included in the report.  Previously they
+	were required to have more than zero seconds tracked.
 
 
 
