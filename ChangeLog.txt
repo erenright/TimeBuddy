@@ -14,6 +14,8 @@ v1.8.0 - February 12, 2013
 	can be used.
   * Option to round summary values to an arbitrary number of
     minutes.
+  * The "Clear Counters" button no longer has focus immediately
+    after opening the Settings window.
 
 
 

@@ -42,6 +42,9 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageTasks = new System.Windows.Forms.TabPage();
             this.tabPageOptions = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.nudSummaryRoundPoint = new System.Windows.Forms.NumericUpDown();
+            this.chkRoundSummaries = new System.Windows.Forms.CheckBox();
             this.txtHourlyReminder = new System.Windows.Forms.TextBox();
             this.chkHourlyReminder = new System.Windows.Forms.CheckBox();
             this.dtpDayEnd = new System.Windows.Forms.DateTimePicker();
@@ -49,9 +52,6 @@
             this.dtpDayStart = new System.Windows.Forms.DateTimePicker();
             this.lblDayStart = new System.Windows.Forms.Label();
             this.btnHelp = new System.Windows.Forms.Button();
-            this.chkRoundSummaries = new System.Windows.Forms.CheckBox();
-            this.nudSummaryRoundPoint = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numAdjust)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPageTasks.SuspendLayout();
@@ -69,14 +69,14 @@
             0});
             this.numAdjust.Name = "numAdjust";
             this.numAdjust.Size = new System.Drawing.Size(71, 20);
-            this.numAdjust.TabIndex = 6;
+            this.numAdjust.TabIndex = 5;
             // 
             // txtNewTask
             // 
             this.txtNewTask.Location = new System.Drawing.Point(81, 237);
             this.txtNewTask.Name = "txtNewTask";
             this.txtNewTask.Size = new System.Drawing.Size(242, 20);
-            this.txtNewTask.TabIndex = 5;
+            this.txtNewTask.TabIndex = 0;
             this.txtNewTask.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNewTask_KeyPress);
             // 
             // btnRemoveTime
@@ -84,7 +84,7 @@
             this.btnRemoveTime.Location = new System.Drawing.Point(239, 206);
             this.btnRemoveTime.Name = "btnRemoveTime";
             this.btnRemoveTime.Size = new System.Drawing.Size(84, 23);
-            this.btnRemoveTime.TabIndex = 4;
+            this.btnRemoveTime.TabIndex = 6;
             this.btnRemoveTime.Text = "Remove Time";
             this.btnRemoveTime.UseVisualStyleBackColor = true;
             this.btnRemoveTime.Click += new System.EventHandler(this.btnRemoveTime_Click);
@@ -94,7 +94,7 @@
             this.btnAddTime.Location = new System.Drawing.Point(81, 205);
             this.btnAddTime.Name = "btnAddTime";
             this.btnAddTime.Size = new System.Drawing.Size(75, 23);
-            this.btnAddTime.TabIndex = 3;
+            this.btnAddTime.TabIndex = 4;
             this.btnAddTime.Text = "Add Time";
             this.btnAddTime.UseVisualStyleBackColor = true;
             this.btnAddTime.Click += new System.EventHandler(this.btnAddTime_Click);
@@ -104,7 +104,7 @@
             this.btnRemoveTask.Location = new System.Drawing.Point(0, 205);
             this.btnRemoveTask.Name = "btnRemoveTask";
             this.btnRemoveTask.Size = new System.Drawing.Size(75, 23);
-            this.btnRemoveTask.TabIndex = 2;
+            this.btnRemoveTask.TabIndex = 3;
             this.btnRemoveTask.Text = "Remove";
             this.btnRemoveTask.UseVisualStyleBackColor = true;
             this.btnRemoveTask.Click += new System.EventHandler(this.btnRemoveTask_Click);
@@ -114,7 +114,7 @@
             this.btnAddTask.Location = new System.Drawing.Point(0, 234);
             this.btnAddTask.Name = "btnAddTask";
             this.btnAddTask.Size = new System.Drawing.Size(75, 23);
-            this.btnAddTask.TabIndex = 1;
+            this.btnAddTask.TabIndex = 2;
             this.btnAddTask.Text = "Add";
             this.btnAddTask.UseVisualStyleBackColor = true;
             this.btnAddTask.Click += new System.EventHandler(this.btnAddTask_Click);
@@ -127,7 +127,7 @@
             this.lstTasks.Name = "lstTasks";
             this.lstTasks.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lstTasks.Size = new System.Drawing.Size(323, 199);
-            this.lstTasks.TabIndex = 0;
+            this.lstTasks.TabIndex = 99;
             this.lstTasks.DragDrop += new System.Windows.Forms.DragEventHandler(this.lstTasks_DragDrop);
             this.lstTasks.DragOver += new System.Windows.Forms.DragEventHandler(this.lstTasks_DragOver);
             this.lstTasks.DoubleClick += new System.EventHandler(this.lstTasks_DoubleClick);
@@ -139,7 +139,7 @@
             this.btnClearCounters.Location = new System.Drawing.Point(355, 31);
             this.btnClearCounters.Name = "btnClearCounters";
             this.btnClearCounters.Size = new System.Drawing.Size(89, 23);
-            this.btnClearCounters.TabIndex = 1;
+            this.btnClearCounters.TabIndex = 7;
             this.btnClearCounters.Text = "Clear Counters";
             this.btnClearCounters.UseVisualStyleBackColor = true;
             this.btnClearCounters.Click += new System.EventHandler(this.btnClearCounters_Click);
@@ -149,7 +149,7 @@
             this.btnAbout.Location = new System.Drawing.Point(355, 60);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(89, 23);
-            this.btnAbout.TabIndex = 5;
+            this.btnAbout.TabIndex = 8;
             this.btnAbout.Text = "About...";
             this.btnAbout.UseVisualStyleBackColor = true;
             this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
@@ -159,7 +159,7 @@
             this.btnReport.Location = new System.Drawing.Point(355, 118);
             this.btnReport.Name = "btnReport";
             this.btnReport.Size = new System.Drawing.Size(89, 23);
-            this.btnReport.TabIndex = 6;
+            this.btnReport.TabIndex = 10;
             this.btnReport.Text = "Report...";
             this.btnReport.UseVisualStyleBackColor = true;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
@@ -209,6 +209,47 @@
             this.tabPageOptions.TabIndex = 1;
             this.tabPageOptions.Text = "Options";
             this.tabPageOptions.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(188, 88);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "minutes";
+            // 
+            // nudSummaryRoundPoint
+            // 
+            this.nudSummaryRoundPoint.Location = new System.Drawing.Point(136, 86);
+            this.nudSummaryRoundPoint.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.nudSummaryRoundPoint.Minimum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.nudSummaryRoundPoint.Name = "nudSummaryRoundPoint";
+            this.nudSummaryRoundPoint.Size = new System.Drawing.Size(46, 20);
+            this.nudSummaryRoundPoint.TabIndex = 7;
+            this.nudSummaryRoundPoint.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            // 
+            // chkRoundSummaries
+            // 
+            this.chkRoundSummaries.AutoSize = true;
+            this.chkRoundSummaries.Location = new System.Drawing.Point(6, 87);
+            this.chkRoundSummaries.Name = "chkRoundSummaries";
+            this.chkRoundSummaries.Size = new System.Drawing.Size(124, 17);
+            this.chkRoundSummaries.TabIndex = 6;
+            this.chkRoundSummaries.Text = "Round Summaries to";
+            this.chkRoundSummaries.UseVisualStyleBackColor = true;
             // 
             // txtHourlyReminder
             // 
@@ -272,51 +313,10 @@
             this.btnHelp.Location = new System.Drawing.Point(355, 89);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(89, 23);
-            this.btnHelp.TabIndex = 8;
+            this.btnHelp.TabIndex = 9;
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
-            // 
-            // chkRoundSummaries
-            // 
-            this.chkRoundSummaries.AutoSize = true;
-            this.chkRoundSummaries.Location = new System.Drawing.Point(6, 87);
-            this.chkRoundSummaries.Name = "chkRoundSummaries";
-            this.chkRoundSummaries.Size = new System.Drawing.Size(124, 17);
-            this.chkRoundSummaries.TabIndex = 6;
-            this.chkRoundSummaries.Text = "Round Summaries to";
-            this.chkRoundSummaries.UseVisualStyleBackColor = true;
-            // 
-            // nudSummaryRoundPoint
-            // 
-            this.nudSummaryRoundPoint.Location = new System.Drawing.Point(136, 86);
-            this.nudSummaryRoundPoint.Maximum = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-            this.nudSummaryRoundPoint.Minimum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            this.nudSummaryRoundPoint.Name = "nudSummaryRoundPoint";
-            this.nudSummaryRoundPoint.Size = new System.Drawing.Size(46, 20);
-            this.nudSummaryRoundPoint.TabIndex = 7;
-            this.nudSummaryRoundPoint.Value = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(188, 88);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "minutes";
             // 
             // SettingsForm
             // 
