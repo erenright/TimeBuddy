@@ -9,6 +9,9 @@ v1.8.0 - February 12, 2013
     Settings window, eliminating possibility of clearing the
 	counters and then exiting the program causing
 	inconsistencies (so long as the window was closed).
+  * Include arbitrary text following project numbers up to the
+    first space in summary tabulation. For example, 100-ABC
+	can be used.
 
 
 

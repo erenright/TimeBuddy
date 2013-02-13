@@ -47,10 +47,10 @@ namespace TimeBuddy
             foreach (Task task in tasks)
             {
                 // Does this look like a project?
-                if (Regex.Match(task.Name, @"^\d+\s").Success)
+                if (Regex.Match(task.Name, @"^\d+\S*\s").Success)
                 {
                     // Task begins with numbers, extract them
-                    string project = Regex.Replace(task.Name, @"^(\d+)\s.*", "$1");
+                    string project = Regex.Replace(task.Name, @"^(\d+\S*).*", "$1");
                     if (summary.Contains(project))
                     {
                         int r = (int)summary[project];
