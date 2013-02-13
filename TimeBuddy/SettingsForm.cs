@@ -35,6 +35,13 @@ namespace TimeBuddy
             dtpDayEnd.Value = dt;
             chkHourlyReminder.Checked = _timeBuddy.Settings.HourlyReminderEnabled;
             txtHourlyReminder.Text = _timeBuddy.Settings.HourlyReminder;
+            chkRoundSummaries.Checked = _timeBuddy.Settings.RoundSummaries;
+
+            int roundPoint = _timeBuddy.Settings.SummaryRoundPoint;
+            if (roundPoint < nudSummaryRoundPoint.Minimum || roundPoint > nudSummaryRoundPoint.Maximum)
+                nudSummaryRoundPoint.Value = nudSummaryRoundPoint.Minimum;
+            else
+                nudSummaryRoundPoint.Value = roundPoint;
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -233,7 +240,12 @@ namespace TimeBuddy
             _timeBuddy.Settings.EndMinute = dtpDayEnd.Value.Minute;
             _timeBuddy.Settings.HourlyReminderEnabled = chkHourlyReminder.Checked;
             _timeBuddy.Settings.HourlyReminder = txtHourlyReminder.Text.Trim();
+            _timeBuddy.Settings.RoundSummaries = chkRoundSummaries.Checked;
+            _timeBuddy.Settings.SummaryRoundPoint = (int)nudSummaryRoundPoint.Value;
 
+            // Hide the form since saving might take some time..
+            Hide();
+            
             try
             {
                 _timeBuddy.SaveSettings();

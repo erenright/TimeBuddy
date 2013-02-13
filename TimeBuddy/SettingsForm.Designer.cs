@@ -49,10 +49,14 @@
             this.dtpDayStart = new System.Windows.Forms.DateTimePicker();
             this.lblDayStart = new System.Windows.Forms.Label();
             this.btnHelp = new System.Windows.Forms.Button();
+            this.chkRoundSummaries = new System.Windows.Forms.CheckBox();
+            this.nudSummaryRoundPoint = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numAdjust)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPageTasks.SuspendLayout();
             this.tabPageOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSummaryRoundPoint)).BeginInit();
             this.SuspendLayout();
             // 
             // numAdjust
@@ -189,6 +193,9 @@
             // 
             // tabPageOptions
             // 
+            this.tabPageOptions.Controls.Add(this.label1);
+            this.tabPageOptions.Controls.Add(this.nudSummaryRoundPoint);
+            this.tabPageOptions.Controls.Add(this.chkRoundSummaries);
             this.tabPageOptions.Controls.Add(this.txtHourlyReminder);
             this.tabPageOptions.Controls.Add(this.chkHourlyReminder);
             this.tabPageOptions.Controls.Add(this.dtpDayEnd);
@@ -270,6 +277,47 @@
             this.btnHelp.UseVisualStyleBackColor = true;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
+            // chkRoundSummaries
+            // 
+            this.chkRoundSummaries.AutoSize = true;
+            this.chkRoundSummaries.Location = new System.Drawing.Point(6, 87);
+            this.chkRoundSummaries.Name = "chkRoundSummaries";
+            this.chkRoundSummaries.Size = new System.Drawing.Size(124, 17);
+            this.chkRoundSummaries.TabIndex = 6;
+            this.chkRoundSummaries.Text = "Round Summaries to";
+            this.chkRoundSummaries.UseVisualStyleBackColor = true;
+            // 
+            // nudSummaryRoundPoint
+            // 
+            this.nudSummaryRoundPoint.Location = new System.Drawing.Point(136, 86);
+            this.nudSummaryRoundPoint.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.nudSummaryRoundPoint.Minimum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.nudSummaryRoundPoint.Name = "nudSummaryRoundPoint";
+            this.nudSummaryRoundPoint.Size = new System.Drawing.Size(46, 20);
+            this.nudSummaryRoundPoint.TabIndex = 7;
+            this.nudSummaryRoundPoint.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(188, 88);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "minutes";
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -294,6 +342,7 @@
             this.tabPageTasks.PerformLayout();
             this.tabPageOptions.ResumeLayout(false);
             this.tabPageOptions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSummaryRoundPoint)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -320,6 +369,9 @@
         private System.Windows.Forms.Button btnHelp;
         private System.Windows.Forms.TextBox txtHourlyReminder;
         private System.Windows.Forms.CheckBox chkHourlyReminder;
+        private System.Windows.Forms.CheckBox chkRoundSummaries;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown nudSummaryRoundPoint;
     }
 }
 

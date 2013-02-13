@@ -13,6 +13,11 @@ namespace TimeBuddy
 {
     public partial class ReportForm : Form
     {
+        /// <summary>
+        /// The minimum number of seconds required to consider an item
+        /// </summary>
+        private const int minimumSeconds = (60 * 5);
+
         TimeBuddy _timeBuddy;
 
         public ReportForm()
@@ -30,6 +35,7 @@ namespace TimeBuddy
         private void ReportForm_Load(object sender, EventArgs e)
         {
             int totalTime = 0;
+            int lostTime = 0;
 
             // Clone tasks
             List<Task> sourceTasks = _timeBuddy.Settings.Tasks.GetRange(0, _timeBuddy.Settings.Tasks.Count);
@@ -39,8 +45,10 @@ namespace TimeBuddy
             foreach (Task task in sourceTasks)
             {
                 // If the item has more than 5 minutes against it, count it
-                if (task.RawSeconds >= (60 * 5))
+                if (task.RawSeconds >= minimumSeconds)
                     tasks.Add(task);
+                else
+                    lostTime += task.RawSeconds;
             }
 
             Hashtable summary = new Hashtable();
@@ -70,14 +78,52 @@ namespace TimeBuddy
             foreach (string project in summary.Keys)
             {
                 Task task = new Task("[summary] " + project);
-                task.RawSeconds = (int)summary[project];
-                tasks.Add(task);
+                int seconds = (int)summary[project];
+
+                if (_timeBuddy.Settings.RoundSummaries)
+                {
+                    // Rounding algorithm is as follows:
+                    //
+                    //    divide tabulated time by the round point, saving the remainder
+                    //    the remainder is divided by the round point
+                    //    if the dividend is greater than or equal to 0.5, round up
+                    //    otherwise, round down
+                    int roundPoint = _timeBuddy.Settings.SummaryRoundPoint * 60;
+
+                    int remainder = seconds % roundPoint;
+                    double dividend = (double)remainder / roundPoint;
+
+                    if (dividend >= 0.5)
+                    {
+                        seconds += roundPoint - remainder;
+                        lostTime -= roundPoint - remainder;
+                    }
+                    else
+                    {
+                        seconds -= remainder;
+                        lostTime += remainder;
+                    }
+                }
+
+                if (seconds >= minimumSeconds)
+                {
+                    task.RawSeconds = seconds;
+                    tasks.Add(task);
+                }
             }
 
             // Add fake [total] task
             Task totalTask = new Task("[total]");
             totalTask.RawSeconds = totalTime;
             tasks.Add(totalTask);
+
+            if (_timeBuddy.Settings.RoundSummaries)
+            {
+                // Add fake [lost] task
+                Task lostTask = new Task("[lost]");
+                lostTask.RawSeconds = lostTime;
+                tasks.Add(lostTask);
+            }
 
             // We have all tasks, so go forward with the grid
             grid.DataSource = tasks;

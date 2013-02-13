@@ -17,7 +17,7 @@ namespace TimeBuddy
     [Serializable]
     public class Settings
     {
-        private string _version = "0.2";
+        private string _version = "0.3";
 
         private List<Task> _tasks;
         private int _startHour;
@@ -74,6 +74,16 @@ namespace TimeBuddy
             get { return _hourlyReminder; }
             set { _hourlyReminder = value; }
         }
+
+        /// <summary>
+        /// Whether or not the report should round summaries.
+        /// </summary>
+        public bool RoundSummaries { get; set; }
+
+        /// <summary>
+        /// The number of minutes to which summaries should be rounded, if enabled.
+        /// </summary>
+        public int SummaryRoundPoint { get; set; }
 
         /*
          * Imports version 0 of the settings file.
@@ -480,6 +490,188 @@ namespace TimeBuddy
         }
 
         /*
+         * Imports/loads version 0.3 of the settings file.
+         */
+        private void Load_Version0_3(XmlElement root)
+        {
+            // Load StartHour
+            XmlNodeList nodes = root.GetElementsByTagName("StartHour");
+            if (nodes == null || nodes.Count == 0 || nodes.Count > 1)
+                throw new Exception("Version0_3 missing StartHour");
+
+            string startHour = nodes[0].InnerText;
+
+            try
+            {
+                StartHour = Convert.ToInt32(startHour);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Version0_3 corrupt StartHour", e);
+            }
+
+
+            // Load StartMinute
+            nodes = root.GetElementsByTagName("StartMinute");
+            if (nodes == null || nodes.Count == 0 || nodes.Count > 1)
+                throw new Exception("Version0_3 missing StartMinute");
+
+            string startMinute = nodes[0].InnerText;
+
+            try
+            {
+                StartMinute = Convert.ToInt32(startMinute);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Version0_3 corrupt StartMinute", e);
+            }
+
+            // Load EndHour
+            nodes = root.GetElementsByTagName("EndHour");
+            if (nodes == null || nodes.Count == 0 || nodes.Count > 1)
+                throw new Exception("Version0_3 missing EndHour");
+
+            string endHour = nodes[0].InnerText;
+
+            try
+            {
+                EndHour = Convert.ToInt32(endHour);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Version0_3 corrupt EndHour", e);
+            }
+
+
+            // Load EndMinute
+            nodes = root.GetElementsByTagName("EndMinute");
+            if (nodes == null || nodes.Count == 0 || nodes.Count > 1)
+                throw new Exception("Version0_3 missing EndMinute");
+
+            string endMinute = nodes[0].InnerText;
+
+            try
+            {
+                EndMinute = Convert.ToInt32(endMinute);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Version0_3 corrupt EndMinute", e);
+            }
+
+            // Load HourlyReminderEnabled
+            nodes = root.GetElementsByTagName("HourlyReminderEnabled");
+            if (nodes == null || nodes.Count == 0 || nodes.Count > 1)
+                throw new Exception("Version0_3 missing HourlyReminderEnabled");
+
+            string hourlyReminderEnabled = nodes[0].InnerText;
+
+            try
+            {
+                HourlyReminderEnabled = Convert.ToBoolean(hourlyReminderEnabled);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Version0_3 corrupt HourlyReminderEnabled", e);
+            }
+
+            // Load HourlyReminder
+            nodes = root.GetElementsByTagName("HourlyReminder");
+            if (nodes == null || nodes.Count == 0 || nodes.Count > 1)
+                throw new Exception("Version0_3 missing HourlyReminder");
+
+            HourlyReminder = nodes[0].InnerText;
+
+            // RoundSummaries
+            nodes = root.GetElementsByTagName("RoundSummaries");
+            if (nodes == null || nodes.Count == 0 || nodes.Count > 1)
+                throw new Exception("Version0_3 missing RoundSummaries");
+
+            try
+            {
+                RoundSummaries = Convert.ToBoolean(nodes[0].InnerText);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Version0_3 has invalid RoundSummaries", e);
+            }
+
+            // Load SummaryRoundPoint
+            nodes = root.GetElementsByTagName("SummaryRoundPoint");
+            if (nodes == null || nodes.Count == 0 || nodes.Count > 1)
+                throw new Exception("Version0_3 missing SummaryRoundPoint");
+
+            try
+            {
+                SummaryRoundPoint = Convert.ToInt32(nodes[0].InnerText);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Version0_3 corrupt SummaryRoundPoint", e);
+            }
+
+            
+            // Load tasks
+            nodes = root.GetElementsByTagName("Task");
+            if (nodes == null)
+                throw new Exception("Version0_3 missing tasks");
+
+            _tasks = new List<Task>();
+
+            foreach (XmlNode node in nodes)
+            {
+                XmlNodeList childNodes = node.ChildNodes;
+                if (childNodes == null)
+                    throw new Exception("Version0_3 has invalid tasks");
+
+                string name = "";
+                int seconds = -123456; // Unlikely to be found in the wild
+                int maxSeconds = -123456;
+
+                foreach (XmlNode childNode in childNodes)
+                {
+                    if (childNode.Name == "Name")
+                    {
+                        name = childNode.InnerText;
+                    }
+                    else if (childNode.Name == "RawSeconds")
+                    {
+                        try
+                        {
+                            seconds = Convert.ToInt32(childNode.InnerText);
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception("Version0_3 has invalid tasks", e);
+                        }
+                    }
+                    else if (childNode.Name == "MaxSeconds")
+                    {
+                        try
+                        {
+                            maxSeconds = Convert.ToInt32(childNode.InnerText);
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception("Version0_3 has invalid tasks", e);
+                        }
+                    }
+                }
+
+                if (name == "" || seconds == -123456 || maxSeconds == -123456)
+                    throw new Exception("Version0_3 has invalid tasks");
+
+                Task task = new Task();
+                task.Name = name;
+                task.RawSeconds = seconds;
+                task.MaxSeconds = maxSeconds;
+
+                _tasks.Add(task);
+            }
+        }
+
+        /*
          * Load saved tasks.  First the version number is queried,
          * and then the data passed off to the appropriate loader.
          * 
@@ -528,10 +720,17 @@ namespace TimeBuddy
             else if (version == "0.2")
             {
                 Load_Version0_2(root);
+                imported = true;    // Notify user that we imported data
+            }
+            else if (version == "0.3")
+            {
+                Load_Version0_3(root);
                 imported = false;   // Normal load, so no message to user
             }
             else
+            {
                 throw new Exception("Unknown settings version");
+            }
 
             return imported;
         }
