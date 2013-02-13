@@ -233,6 +233,16 @@ namespace TimeBuddy
             _timeBuddy.Settings.EndMinute = dtpDayEnd.Value.Minute;
             _timeBuddy.Settings.HourlyReminderEnabled = chkHourlyReminder.Checked;
             _timeBuddy.Settings.HourlyReminder = txtHourlyReminder.Text.Trim();
+
+            try
+            {
+                _timeBuddy.SaveSettings();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to save settings: " + ex.Message, "TimeBuddy",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         /***************************************************************

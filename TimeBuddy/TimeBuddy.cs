@@ -440,9 +440,9 @@ namespace TimeBuddy
 
         }
 
-        /*
-         * Save user settings.  This simply uses an XmlSerializer.
-         */
+        /// <summary>
+        /// Saves use settings by way of XmlSerializer.
+        /// </summary>
         public void SaveSettings()
         {
             TextWriter w = null;
@@ -464,11 +464,11 @@ namespace TimeBuddy
             }
         }
 
-        /*
-         * Load settings.  Because we want to allow upgrades from previous
-         * versions, we do no use XmlSerializer here but instead use the
-         * Settings class itself.  Any exceptions are propogated out.
-         */
+        /// <summary>
+        /// Load settings.  Because we want to allow upgrades from previous versions,
+        /// we do not use XmlSerializer here but instead use the Settings class
+        /// itself.  Any exceptions are propogated out.
+        /// </summary>
         public void LoadSettings()
         {
             _settings = new Settings();

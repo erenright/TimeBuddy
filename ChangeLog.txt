@@ -1,7 +1,14 @@
 Changelog for TimeBuddy.
 
-Last updated: May 31, 2012 for v1.7.0
+Last updated: February 12, 2013 for v1.8.0
 
+
+
+v1.8.0 - February 12, 2013
+  * Save tasks to non-volatile storage when closing the
+    Settings window, eliminating possibility of clearing the
+	counters and then exiting the program causing
+	inconsistencies (so long as the window was closed).
 
 
 
