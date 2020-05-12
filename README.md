@@ -23,3 +23,8 @@ A rich yet simple set of features are supported, with the driving goal that this
 # Warning
 
 This application was originally written in the early 2010's for Microsoft Windows XP and 7 PC's using .Net 4.0.  It is known to work with Windows 10 PC's but this has not been fully tested and there may be graphical issues such as the system tray icon being difficult to see due to Windows theme changes since then (black on black).
+
+# Build Environment
+
+Microsoft Visual C# 2010 Express
+
